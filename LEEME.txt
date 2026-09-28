@@ -1,0 +1,22 @@
+KOBU DULCE · ARCHIVOS DE LA PÁGINA
+
+Qué es cada cosa
+  index.html            El menú (página principal).
+  negocios.html         La página para negocios.
+  datos.js              Precios, productos, agotados, íconos, alérgenos, combos y reseñas.
+  KobuEditor.html       El editor visual para cambiar datos.js sin tocar código.
+  fonts/                Las tipografías de la página (no borrar).
+  manifest.webmanifest  y los icon-*.png: para instalar la página como app en el celular.
+  respaldos/            Copias automáticas de datos.js que hace el editor (aparece después de guardar).
+
+Cómo usar el editor
+  1. Abrí "KobuEditor.html" con Google Chrome o Microsoft Edge (clic derecho > Abrir con).
+  2. La primera vez tocá "Elegir carpeta" y elegí esta carpeta (Kobu web). Dale permiso para ver y guardar.
+     Las próximas veces alcanza con "Continuar con la carpeta".
+  3. A la izquierda ves la página; a la derecha cambiás lo que quieras. Se guarda solo en datos.js.
+  4. Ctrl+Z deshace, Ctrl+Y rehace. En "Versiones" podés guardar una foto del menú y volver a ella.
+
+Para publicar los cambios en GitHub Pages
+  Subí el datos.js nuevo al repositorio (reemplazando el anterior). En uno o dos minutos se ve en la página.
+  La primera vez subí todo: index.html, negocios.html, datos.js, manifest.webmanifest, los icon-*.png y la carpeta fonts.
+  No hace falta subir "KobuEditor.html", "LEEME.txt" ni la carpeta respaldos.
