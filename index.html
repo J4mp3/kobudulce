@@ -482,10 +482,10 @@
   @keyframes sp-pop{0%{transform:scale(0)} 55%{transform:scale(1.12)} 80%{transform:scale(.96)} 100%{transform:scale(1)}}
   .sp-name{position:relative; display:flex; gap:.34em; margin-top:26px; font-family:var(--sans); font-weight:600; font-size:clamp(34px, 9vw, 46px); line-height:1}
   .sp-name span{opacity:0; transform:translateY(-10px) rotate(var(--r)); animation:sp-letter .25s ease-out forwards}
-  .sp-name span:nth-of-type(1){--r:-10deg; --y:6px; animation-delay:.55s}
-  .sp-name span:nth-of-type(2){--r:-3deg; --y:2px; animation-delay:.63s}
-  .sp-name span:nth-of-type(3){--r:3deg; --y:-1px; animation-delay:.71s}
-  .sp-name span:nth-of-type(4){--r:9deg; --y:-5px; animation-delay:.79s}
+  .sp-name span:nth-of-type(1){--r:-13deg; --y:9px; animation-delay:.55s}
+  .sp-name span:nth-of-type(2){--r:-4deg; --y:0px; animation-delay:.63s}
+  .sp-name span:nth-of-type(3){--r:4deg; --y:0px; animation-delay:.71s}
+  .sp-name span:nth-of-type(4){--r:13deg; --y:9px; animation-delay:.79s}
   @keyframes sp-letter{to{opacity:1; transform:translateY(var(--y)) rotate(var(--r))}}
   .sp-star{position:absolute; width:14px; height:14px; fill:#fff; opacity:0; animation:sp-twinkle .9s ease-in-out .85s infinite}
   .sp-star.a{left:-1.1em; bottom:-6px}
