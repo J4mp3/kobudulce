@@ -58,6 +58,7 @@ window.KOBU = {
     diasSinEntrega: [],                   // días que no entregan, ej: ["domingo"] o ["domingo", "lunes"]
     retiro: "Paso 1405, Ingeniero Maschwitz",
     mapa: "Kobu Dulce, Paso 1405, Ingeniero Maschwitz",   // lo que busca el mapa de "Encontranos"
+    mapaInsertado: "",   // link del mapa de Google para mostrar dentro de la página (Compartir > Insertar un mapa). Vacío = no se muestra el botón "Ver mapa acá"
   },
 
   /* ---------- Alérgenos ----------
