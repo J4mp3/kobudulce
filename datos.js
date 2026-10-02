@@ -4,7 +4,7 @@
    el editor, pero también se puede editar a mano con cuidado:
    · textos entre comillas, precios solo con números, una coma después de cada cosa.
    · no cambies los "id" de lo que ya existe.
-   Última edición: 2/10/2026, 12:42:30
+   Última edición: 2/10/2026, 01:25:22
    ===================================================================== */
 
 window.KOBU = {
@@ -14,10 +14,10 @@ window.KOBU = {
     diasSinEntrega: [],
     retiro: "Paso 1405, Ingeniero Maschwitz",
     mapa: "Kobu Dulce, Paso 1405, Ingeniero Maschwitz",
-    mapaInsertado: ""
+    mapaInsertado: "https://maps.app.goo.gl/aCKFyeyAduLqRwaE9"
   },
   mostrarAlergenos: false,
-  estadisticas: "",
+  estadisticas: "kobudulce",
   categorias: [
     {
       id: "clasicos",
