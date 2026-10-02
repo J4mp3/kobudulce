@@ -4,7 +4,7 @@
    el editor, pero también se puede editar a mano con cuidado:
    · textos entre comillas, precios solo con números, una coma después de cada cosa.
    · no cambies los "id" de lo que ya existe.
-   Última edición: 2/10/2026, 12:21:14
+   Última edición: 30/9/2026, 03:48:12
    ===================================================================== */
 
 window.KOBU = {
@@ -103,8 +103,9 @@ window.KOBU = {
           id: "budin-xl",
           nombre: "Budín XL",
           precio: 7500,
+          aPedido: true,
           enNegocios: false,
-          descripcion: "Versión XL de cualquiera de los sabores clásicos.",
+          descripcion: "Cualquiera de los sabores clásicos, en tamaño grande.",
           opciones: {
             titulo: "Sabor",
             prefijo: "Sabor: ",
@@ -122,8 +123,7 @@ window.KOBU = {
               "Naranja y miel sin glasé"
             ]
           },
-          alergenos: [],
-          aPedido: true
+          alergenos: []
         }
       ]
     },

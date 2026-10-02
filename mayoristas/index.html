@@ -87,6 +87,12 @@
   .item-sub{display:block; font-weight:700; font-size:14px; margin-top:3px}
   .item-desc{margin:3px 0 0; font-size:14px; font-weight:300; color:var(--muted); max-width:44ch}
   .sheet.dark .item-desc{color:#E4C6BE}
+  .item-ing{margin:5px 0 0; font-size:13.5px; font-weight:300; line-height:1.45; color:var(--muted); max-width:46ch}
+  .item-ing b{font-weight:700; font-size:11px; letter-spacing:.1em; text-transform:uppercase; margin-right:4px}
+  .sheet.dark .item-ing{color:#E4C6BE}
+  .prices .ask{font-size:15px; font-weight:700; letter-spacing:.04em}
+  .item.flash{animation:flash 1.2s ease}
+  @keyframes flash{30%{background:rgba(242,163,160,.35)}}
   .badge{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.1em; text-transform:uppercase; padding:4px 8px 2px; border-radius:4px; background:var(--pink); color:var(--ink); margin-left:8px; vertical-align:3px}
 
   .row{display:grid; grid-template-columns:1fr auto; align-items:center; gap:12px; margin-top:10px}
@@ -114,9 +120,58 @@
   .step.on .minus{display:grid}
   .step.on .qty{display:block}
 
+  /* Secciones en tarjetas (acordeón) */
+  .cats{display:flex; flex-direction:column; gap:12px}
+  .cat{background:var(--paper); border-radius:18px; overflow:hidden}
+  .cat-h{width:100%; display:flex; align-items:center; gap:12px; padding:14px 14px 12px; background:none; border:0; text-align:left; font:inherit; color:inherit; cursor:pointer}
+  .cat-ic{width:44px; height:44px; border-radius:50%; background:var(--ink); color:var(--cream); display:grid; place-items:center; flex:none}
+  .cat-ic svg{width:22px; height:22px}
+  .cat-t{flex:1; min-width:0; display:flex; flex-direction:column; gap:3px}
+  .cat-t b{font-family:var(--serif); font-weight:400; font-size:19px; line-height:1.05; text-transform:uppercase; letter-spacing:.01em}
+  .cat-t em{font-family:var(--script); font-style:normal; font-size:24px; line-height:.95; color:var(--bordo); margin:-3px 0 1px}
+  .cat-t small{font-size:12.5px; color:#735048; line-height:1.35}
+  .cat-t i{font-style:normal; font-size:12.5px; font-weight:600; color:var(--bordo)}
+  .desde{flex:none; display:flex; flex-direction:column; align-items:center; background:var(--bordo); color:var(--cream); border-radius:14px; padding:7px 11px 5px; line-height:1.05; white-space:nowrap; font-variant-numeric:tabular-nums}
+  .desde small{font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; opacity:.85}
+  .desde b{font-size:15.5px; font-weight:700; letter-spacing:.01em}
+  .cat-sel{flex:none; min-width:22px; height:22px; border-radius:99px; background:var(--pink); color:var(--ink); font-size:12px; font-weight:700; display:grid; place-items:center; padding:2px 6px 0}
+  .cat-b{display:grid; grid-template-rows:0fr; transition:grid-template-rows .3s ease}
+  .cat.open .cat-b{grid-template-rows:1fr}
+  .cat-b > div{overflow:hidden; min-height:0}
+  .cat-in{list-style:none; background:#FFFDF9; margin:0 10px 10px; border-radius:12px; padding:2px 14px}
+  .cat-in .item{padding:12px 0; border-top:1px solid rgba(46,20,20,.1)}
+  .cat-in .item:first-child{border-top:0}
+  .cat-in .item-name{font-size:16.5px; font-weight:600; letter-spacing:.01em}
+  .cat-in .badge{margin-left:6px; vertical-align:2px}
+  .cat-in .row{grid-template-columns:minmax(0,1fr) auto auto; margin-top:8px}
+  .cat-in .item.one .row{margin-top:0}
+  .cat-in .row-label{font-size:15px}
+  .pcol{display:flex; flex-direction:column; align-items:flex-end; gap:1px; font-variant-numeric:tabular-nums; white-space:nowrap}
+  .pcol s{font-size:12.5px; color:var(--muted); text-decoration-thickness:1.5px}
+  .pcol b{font-size:17px; font-weight:700}
+  .pcol .ask{font-size:13px; letter-spacing:.03em}
+  .row.off .row-l, .row.off .pcol{opacity:.5}
+  .row.off .pcol b{text-decoration:line-through}
+  .cat-in .step button{width:34px; height:34px; font-size:21px}
+  .cat-in .step{height:34px}
+  @media (prefers-reduced-motion: reduce){ .cat-b{transition:none} }
   .empty{text-align:center; color:var(--muted); font-size:15px; margin:18px 0 0}
 
   /* Datos del pedido */
+  /* Por qué Kobu */
+  .why-card{background:#FFFDF9; border:1px solid var(--line); border-radius:18px; padding:22px 18px 18px}
+  .why-card h2{margin:0; font-family:var(--serif); font-weight:400; font-size:clamp(28px, 7.5vw, 34px); line-height:1.05; text-transform:uppercase; text-align:center}
+  .natural{display:flex; align-items:center; gap:14px; margin-top:18px; background:var(--bordo); color:var(--cream); border-radius:14px; padding:14px 16px 12px}
+  .natural .ic{flex:none; width:44px; height:44px; border-radius:50%; background:var(--cream); color:var(--bordo); display:grid; place-items:center}
+  .natural .ic svg{width:24px; height:24px}
+  .natural strong{display:block; font-size:16.5px; line-height:1.25; letter-spacing:.02em}
+  .natural span{display:block; margin-top:3px; font-size:13.5px; font-weight:300; color:#F3DCD6}
+  .why{list-style:none; margin:16px 0 0; padding:0; display:grid; gap:12px}
+  .why li{display:grid; grid-template-columns:40px 1fr; gap:14px; align-items:start}
+  .why .ic{width:40px; height:40px; border-radius:50%; background:var(--ink); color:var(--cream); display:grid; place-items:center}
+  .why .ic svg{width:20px; height:20px}
+  .why strong{display:block; font-size:16px; padding-top:3px}
+  .why span{display:block; font-size:14px; color:var(--muted); font-weight:300; line-height:1.4}
   .form-card{background:var(--paper); border-radius:18px; padding:22px 18px 20px}
   .form-card h2{margin:0; font-family:var(--serif); font-weight:400; font-size:clamp(28px, 7.5vw, 34px); line-height:1.05; text-transform:uppercase; text-align:center}
   .form-card h2 em{display:block; font-family:var(--script); font-style:normal; text-transform:none; font-size:.95em; color:var(--bordo)}
@@ -278,6 +333,22 @@
 <main>
   <div id="lista"></div>
 
+  <section class="why-card" aria-labelledby="tw">
+    <h2 id="tw">Por qué Kobu</h2>
+    <div class="natural">
+      <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 14-13 0 9-5 14-13 14"/><path d="M5 19c3-4.5 6.5-7.5 10-9.5"/></svg></span>
+      <div><strong>Sin conservantes ni saborizantes artificiales</strong><span>Sin aditivos. Sabor casero auténtico, como recién hecho en casa.</span></div>
+    </div>
+    <ul class="why">
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3c-1 2.5 1.5 3.5 0 6M8 5c-.7 1.6.9 2.4 0 4M16 5c-.7 1.6.9 2.4 0 4"/><path d="M4 12h16l-1.5 7.5a2 2 0 0 1-2 1.5h-9a2 2 0 0 1-2-1.5Z"/></svg></span>
+        <div><strong>Recién horneado</strong><span>Producción artesanal con insumos frescos de primera calidad.</span></div></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3.5 2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8Z"/></svg></span>
+        <div><strong>Clientes que vuelven</strong><span>Más de 25 reseñas de 5 estrellas en Google.</span></div></li>
+      <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/></svg></span>
+        <div><strong>Trato directo</strong><span>Hablás con quien cocina: pedidos, cantidades y entregas se coordinan por WhatsApp.</span></div></li>
+    </ul>
+  </section>
+
   <section class="form-card" id="pedido" aria-labelledby="tp">
     <h2 id="tp">Tu pedido<em>por WhatsApp</em></h2>
     <form class="form" id="form">
@@ -333,7 +404,7 @@
 <script src="../mayorista.js"></script>
 <script>
 const K = window.KOBU || { negocio:{}, categorias:[] };
-const M = window.KOBU_MAYORISTA || { precios:{} };
+const M = window.KOBU_MAYORISTA || { categorias:[] };
 if (window.KOBU_PREVIEW){
   document.addEventListener("click", e => { const a = e.target.closest("a[href]"); if (a && !a.getAttribute("href").startsWith("#")) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
   let tm; addEventListener("scroll", () => { clearTimeout(tm); tm = setTimeout(() => parent.postMessage({ kobu: "scroll", y: scrollY }, "*"), 80); }, { passive: true });
@@ -343,54 +414,107 @@ const $ = s => document.querySelector(s);
 const WHATSAPP = (K.negocio && K.negocio.whatsapp) || "5491127929909";
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const money = n => "$ " + Math.round(Number(n)).toLocaleString("es-AR");
-const PRECIOS = M.precios || {};
-const pm = key => { const v = Number(PRECIOS[key]); return PRECIOS[key] !== "" && PRECIOS[key] != null && v > 0 ? v : null; };
+const num = v => (v === "" || v == null || isNaN(+v) || +v <= 0) ? null : +v;
+
+/* La lista vive en mayorista.js. Si el archivo tiene el formato viejo (solo precios),
+   se arma a partir de los productos del menú. */
+function migrar(M, K){
+  if (Array.isArray(M.categorias)) return M;
+  const P = M.precios || {}, hay = Object.keys(P).some(k => num(P[k]));
+  const cats = (K.categorias || []).map(c => ({
+    id: c.id, titulo: c.titulo || c.pestana, cursiva: c.cursiva, nota: c.nota && !/pedido/i.test(c.nota) ? c.nota : "", oscuro: c.oscuro,
+    productos: (c.productos || []).map(p => {
+      const base = { id: p.id, nombre: p.nombre, subtitulo: p.subtitulo, descripcion: p.descripcion };
+      if (p.variantes && p.variantes.length){
+        const vs = p.variantes.filter(v => !hay || num(P[`${p.id}.${v.id}`])).map(v => ({ id: v.id, nombre: v.nombre, detalle: v.detalle, precio: num(P[`${p.id}.${v.id}`]) || "", precioPublico: v.precio }));
+        return vs.length ? { ...base, variantes: vs } : null;
+      }
+      if (hay && !num(P[p.id])) return null;
+      return { ...base, precio: num(P[p.id]) || "", precioPublico: p.precio };
+    }).filter(Boolean),
+  })).filter(c => c.productos.length);
+  return { actualizado: M.actualizado || "", categorias: cats };
+}
+const MAY = migrar(M, K);
 
 /* Fecha de la lista */
 let FECHA = "";
-const f = String(M.actualizado || "").match(/^(\d{4})-(\d{2})-(\d{2})/);
+const f = String(MAY.actualizado || "").match(/^(\d{4})-(\d{2})-(\d{2})/);
 if (f){ FECHA = `${f[3]}/${f[2]}/${f[1]}`; $("#vigente").textContent = "Precios vigentes al " + FECHA; $("#vigente").hidden = false; }
 
-/* Armar la lista a partir de datos.js + mayorista.js */
+/* Armar la lista */
 const ITEMS = {};           // key -> { nombre, precio }
 const qty = {};
 let anyStrike = false;
 const pricesHtml = (pub, may) => {
-  const strike = pub > may;
+  if (may == null) return `<span class="prices"><b class="ask">Precio a consultar</b></span>`;
+  const strike = pub != null && pub > may;
   if (strike) anyStrike = true;
   return `<span class="prices">${strike ? `<s aria-label="Precio al público ${money(pub)}">${money(pub)}</s>` : ""}<b>${money(may)}</b></span>`;
 };
 const stepHtml = (key, name) => `<div class="step" data-key="${esc(key)}"><button type="button" class="minus" aria-label="Quitar ${esc(name)}">−</button><span class="qty" aria-live="polite">0</span><button type="button" class="plus" aria-label="Agregar ${esc(name)}">+</button></div>`;
-const sheets = (K.categorias || []).map(c => {
-  const prods = (c.productos || []).map(p => {
-    const rows = p.variantes && p.variantes.length
-      ? p.variantes.map(v => ({ key: `${p.id}.${v.id}`, label: v.nombre, detalle: v.detalle, pub: +v.precio || 0, off: p.agotado || v.agotado, full: `${p.nombre} (${v.nombre})` }))
-      : [{ key: p.id, pub: +p.precio || 0, off: p.agotado, full: p.nombre }];
-    const priced = rows.filter(r => pm(r.key) != null);
-    if (!priced.length) return "";
-    priced.forEach(r => { r.may = pm(r.key); ITEMS[r.key] = { nombre: r.full, precio: r.may, off: r.off }; });
-    const badges = (p.aPedido && !c.aPedido ? `<span class="badge">A pedido</span>` : "") + (p.nuevo ? `<span class="badge">Nuevo</span>` : "");
-    const head = `<div class="item-name">${esc(p.nombre)}${badges}</div>${p.subtitulo ? `<span class="item-sub">${esc(p.subtitulo)}</span>` : ""}${p.descripcion ? `<p class="item-desc">${esc(p.descripcion)}</p>` : ""}`;
-    const single = priced.length === 1 && !p.variantes;
-    const rowsHtml = priced.map(r => `<div class="row${single ? " solo" : ""}${r.off ? " off" : ""}">
-        <div>${single ? "" : `<div class="row-label">${esc(r.label)}${r.detalle ? `<small>${esc(r.detalle)}</small>` : ""}</div>`}${pricesHtml(r.pub, r.may)}</div>
-        ${r.off ? `<span class="off-tag">Agotado hoy</span>` : stepHtml(r.key, r.full)}
-      </div>`).join("");
-    return `<li class="item">${head}${rowsHtml}</li>`;
+const ICONOS = /*ICONOS*/{"budin": {"nombre": "Budín", "svg": "<path d=\"M4 11a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v1a1 1 0 0 1-1 1v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-5a1 1 0 0 1-1-1Z\"/><path d=\"M9 7v3M12 7v3M15 7v3\"/>"}, "estrella": {"nombre": "Estrella", "svg": "<path d=\"m12 3.5 2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8Z\"/>"}, "brownie": {"nombre": "Brownie mordido", "svg": "<path d=\"M5 8h9.2a3 3 0 0 0 4.8 2.2V18a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1Z\"/><path d=\"M5 12c1.4 0 1.4 1.8 2.8 1.8S9.2 12 10.6 12s1.4 1.8 2.8 1.8 1.4-1.6 2.8-1.6 1.4 1 2.8 1\"/><path d=\"M8 16.5h.01M12 17h.01M15.5 16.3h.01\" stroke-width=\"2.4\"/>"}, "pila": {"nombre": "Pila de bocaditos", "svg": "<rect x=\"3.5\" y=\"13\" width=\"8\" height=\"7\" rx=\"1.2\"/><rect x=\"12.5\" y=\"13\" width=\"8\" height=\"7\" rx=\"1.2\"/><rect x=\"8\" y=\"5\" width=\"8\" height=\"7\" rx=\"1.2\"/><path d=\"M8 7.5c1.3 0 1.3 1.3 2.7 1.3s1.3-1.3 2.6-1.3 1.4 1.3 2.7 1.3\"/>"}, "cupcake": {"nombre": "Cupcake", "svg": "<path d=\"M6.5 12h11L16 20H8Z\"/><path d=\"M10.2 12.3l.5 7.5M13.8 12.3l-.5 7.5\"/><path d=\"M6.5 12a2.8 2.8 0 0 1 .8-5 3.4 3.4 0 0 1 4.7-2.7A3.4 3.4 0 0 1 16.7 7a2.8 2.8 0 0 1 .8 5\"/><circle cx=\"12\" cy=\"3\" r=\"1.1\"/>"}, "corazon": {"nombre": "Corazón", "svg": "<path d=\"M12 20.5s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.9c0 5.4-7.5 10-7.5 10Z\"/><path d=\"M9 11.5c.8-.9 1.8-1 2.6-.4\"/>"}, "cuadraditos": {"nombre": "Cuadraditos", "svg": "<rect x=\"4\" y=\"4\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"13\" y=\"4\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"4\" y=\"13\" width=\"7\" height=\"7\" rx=\"1.5\"/><rect x=\"13\" y=\"13\" width=\"7\" height=\"7\" rx=\"1.5\"/>"}, "bolsita": {"nombre": "Bolsita", "svg": "<path d=\"M6 8h12l-1 12H7Z\"/><path d=\"M9 8V6a3 3 0 0 1 6 0v2\"/>"}, "caja": {"nombre": "Caja de regalo", "svg": "<rect x=\"4.5\" y=\"11\" width=\"15\" height=\"9\" rx=\"1.2\"/><rect x=\"3.5\" y=\"7.8\" width=\"17\" height=\"3.2\" rx=\"1\"/><path d=\"M12 7.8V20\"/><path d=\"M12 7.8c-1.3-2.7-5-3.6-5-1.6S10 7.8 12 7.8Zm0 0c1.3-2.7 5-3.6 5-1.6S14 7.8 12 7.8Z\"/>"}, "torta": {"nombre": "Torta", "svg": "<path d=\"M4 20h16M5 20v-6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v6\"/><path d=\"M5 16c2 1 3.5 1 5 0s3-1 5 0 3 1 4 0\"/><path d=\"M12 12V8M12 5.5v.5\"/>"}, "medialuna": {"nombre": "Medialuna", "svg": "<path d=\"M3.2 16C3.8 10.4 7.5 6.6 12 6.6s8.2 3.8 8.8 9.4c-1.3-.8-2.8-1.1-4.2-.8-1.1-1.4-2.8-2.2-4.6-2.2s-3.5.8-4.6 2.2c-1.4-.3-2.9 0-4.2.8Z\"/><path d=\"M8.1 7.8 7.4 15.1M12 6.6V13M15.9 7.8l.7 7.3\"/>"}, "galletita": {"nombre": "Galletita con chips", "svg": "<path d=\"M12 4a8 8 0 1 0 8 8c-1.6.2-2.9-.9-3-2.4-1.6.1-2.9-1.1-2.8-2.8C12.8 6.8 11.8 5.5 12 4Z\"/><path d=\"M8.6 10h.01M11 15.2h.01M15 14.3h.01M8.3 14.6h.01M12.2 11.4h.01\" stroke-width=\"2.6\"/>"}, "porcion": {"nombre": "Porción de torta", "svg": "<path d=\"M4 19h16v-8.5L4 6.8Z\"/><path d=\"M4 12.6h16M4 15.8h16\"/><circle cx=\"14.5\" cy=\"7.3\" r=\"1.3\"/><path d=\"M15.2 6.1c.4-1 1.1-1.6 2-1.8\"/>"}, "torta-velita": {"nombre": "Torta con velita", "svg": "<rect x=\"4.5\" y=\"12\" width=\"15\" height=\"8\" rx=\"1.5\"/><path d=\"M4.5 15c1.3 0 1.3 1.4 2.5 1.4S8.3 15 9.5 15s1.3 1.4 2.5 1.4 1.3-1.4 2.5-1.4 1.3 1.4 2.5 1.4 1.2-1.4 2.5-1.4\"/><path d=\"M12 12V8.6\"/><path d=\"M12 6.8c-1-.8-1-2.1 0-3.4 1 1.3 1 2.6 0 3.4Z\"/>"}, "dona": {"nombre": "Dona", "svg": "<circle cx=\"12\" cy=\"12\" r=\"8\"/><circle cx=\"12\" cy=\"12\" r=\"2.4\"/><path d=\"M14.0 7.2L15.3 7.6M16.7 13.3L17.7 12.5M12.6 16.7L13.2 17.8M6.8 14.6L8.1 14.6M7.3 9.5L8.0 8.4M12.4 6.5L13.5 7.1\" stroke-width=\"1.6\"/>"}, "muffin": {"nombre": "Muffin", "svg": "<path d=\"M7 13h10l-1.2 7H8.2Z\"/><path d=\"M10.2 13.3l.3 6.5M13.8 13.3l-.3 6.5\"/><path d=\"M5.6 13a3 3 0 0 1 1.3-5.4A5.2 5.2 0 0 1 12 4.8a5.2 5.2 0 0 1 5.1 2.8 3 3 0 0 1 1.3 5.4Z\"/><path d=\"M10 9.6h.01M13.6 10.1h.01M12 7.6h.01\" stroke-width=\"2.4\"/>"}, "cafe": {"nombre": "Taza de café", "svg": "<path d=\"M5 10h11v4.3a4.7 4.7 0 0 1-4.7 4.7H9.7A4.7 4.7 0 0 1 5 14.3Z\"/><path d=\"M16 11.3h1.3a2.4 2.4 0 0 1 0 4.8h-1.6\"/><path d=\"M3.5 21h14\"/><path d=\"M8.6 7.2c-.7-1 .7-1.7 0-2.8M12.2 7.2c-.7-1 .7-1.7 0-2.8\"/>"}, "mate": {"nombre": "Mate", "svg": "<path d=\"M7.5 9.6C5.9 11 5 13 5 15c0 3.3 3 6 7 6s7-2.7 7-6c0-2-.9-4-2.5-5.4Z\"/><path d=\"M7.5 9.6h9\"/><path d=\"M8.7 9.6c.8-1.1 2-1.7 3.3-1.7s2.5.6 3.3 1.7\"/><path d=\"M13.2 8.4 16.6 3\"/><path d=\"M15.8 2.5l1.7 1.1\"/>"}, "canasta": {"nombre": "Canasta", "svg": "<path d=\"M3.8 11h16.4l-1.7 8.6a1 1 0 0 1-1 .8H6.5a1 1 0 0 1-1-.8Z\"/><path d=\"M7 11a5 5 0 0 1 10 0\"/><path d=\"M8.7 11.3l.7 9M12 11.3v9M15.3 11.3l-.7 9M4.6 15h14.8\"/>"}, "campana": {"nombre": "Campana de torta", "svg": "<path d=\"M5 15a7 7 0 0 1 14 0\"/><path d=\"M12 8V6.6\"/><circle cx=\"12\" cy=\"5.6\" r=\"1\"/><path d=\"M3.5 15h17\"/><path d=\"M12 15v3.6M8.8 19.6h6.4\"/><path d=\"M9.2 15v-2.6h5.6V15\"/>"}, "batidor": {"nombre": "Batidor", "svg": "<path d=\"M12 21v-4.6\"/><path d=\"M12 16.4c-2.9 0-4.4-3.9-4.4-7.4S9.5 3 12 3s4.4 2.5 4.4 6-1.5 7.4-4.4 7.4Z\"/><path d=\"M12 16.4c-1.1 0-1.9-3.2-1.9-6.8S11 3 12 3s1.9 2.9 1.9 6.6-.8 6.8-1.9 6.8Z\"/><path d=\"M10.4 16.6h3.2\"/>"}, "gorro": {"nombre": "Gorro de chef", "svg": "<path d=\"M7 14a3.5 3.5 0 0 1-.6-6.9A4 4 0 0 1 12 4.5a4 4 0 0 1 5.6 2.6A3.5 3.5 0 0 1 17 14Z\"/><path d=\"M7 14v4.6a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V14\"/><path d=\"M7 16.6h10\"/>"}}/*FIN-ICONOS*/;
+const svgIcon = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${(ICONOS[k] || ICONOS.budin || {}).svg || ""}</svg>`;
+const icono = c => { const t = [c.id, c.titulo, c.cursiva].join(" ");
+  return svgIcon(ICONOS[c.icono] ? c.icono : /premium/i.test(t) ? "estrella" : /bocadit|dulce|brownie/i.test(t) ? "pila" : /salad|skon|scon/i.test(t) ? "bolsita" : /combo|caja|box|regalo/i.test(t) ? "caja" : /torta/i.test(t) ? "torta" : "budin"); };
+const priceCol = r => {
+  if (r.may == null) return `<span class="pcol"><b class="ask">A consultar</b></span>`;
+  const strike = r.pub != null && r.pub > r.may;
+  if (strike) anyStrike = true;
+  return `<span class="pcol">${strike ? `<s aria-label="Precio al público ${money(r.pub)}">${money(r.pub)}</s>` : ""}<b>${money(r.may)}</b></span>`;
+};
+const ctrl = r => r.off ? `<span class="off-tag">Agotado hoy</span>` : stepHtml(r.key, r.full);
+const cards = (MAY.categorias || []).map((c, ci) => {
+  const prods = (c.productos || []).filter(p => String(p.nombre || "").trim());
+  if (!prods.length) return "";
+  let min = null;
+  const body = prods.map(p => {
+    const vs = p.variantes && p.variantes.length;
+    const rows = vs
+      ? p.variantes.map(v => ({ key: `${p.id}.${v.id}`, label: v.nombre, detalle: v.detalle, pub: num(v.precioPublico), may: num(v.precio), off: p.agotado || v.agotado, full: `${p.nombre} (${v.nombre})` }))
+      : [{ key: p.id, pub: num(p.precioPublico), may: num(p.precio), off: p.agotado, full: p.nombre }];
+    rows.forEach(r => { ITEMS[r.key] = { nombre: r.full, precio: r.may, cat: ci }; if (r.may != null) min = min == null ? r.may : Math.min(min, r.may); });
+    const badges = p.nuevo ? `<span class="badge">Nuevo</span>` : "";
+    const name = `<div class="item-name">${esc(p.nombre)}${badges}</div>`;
+    const info = `${p.subtitulo ? `<span class="item-sub">${esc(p.subtitulo)}</span>` : ""}${p.descripcion ? `<p class="item-desc">${esc(p.descripcion)}</p>` : ""}${String(p.ingredientes || "").trim() ? `<p class="item-ing"><b>Ingredientes</b>${esc(p.ingredientes.trim())}</p>` : ""}`;
+    if (!vs){ const r = rows[0]; return `<li class="item one" data-pid="${esc(p.id)}"><div class="row${r.off ? " off" : ""}"><div class="row-l">${name}${info}</div>${priceCol(r)}${ctrl(r)}</div></li>`; }
+    return `<li class="item" data-pid="${esc(p.id)}">${name}${info}${rows.map(r => `<div class="row${r.off ? " off" : ""}"><div class="row-l"><div class="row-label">${esc(r.label)}${r.detalle ? `<small>${esc(r.detalle)}</small>` : ""}</div></div>${priceCol(r)}${ctrl(r)}</div>`).join("")}</li>`;
   }).join("");
-  if (!prods) return "";
-  return `<section class="sheet${c.oscuro ? " dark" : ""}" aria-label="${esc([c.titulo, c.cursiva].filter(Boolean).join(" "))}">
-    <div class="rings" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    <h2>${esc(c.titulo || c.pestana)}${c.cursiva ? `<em>${esc(c.cursiva)}</em>` : ""}</h2>
-    ${c.nota ? `<p class="note">${esc(c.nota)}</p>` : ""}
-    <ul class="items">${prods}</ul>
+  const titulo = c.titulo || c.cursiva || "";
+  return `<section class="cat" data-cat="${ci}">
+    <button type="button" class="cat-h" id="cath${ci}" aria-expanded="false" aria-controls="catb${ci}">
+      <span class="cat-ic" aria-hidden="true">${icono(c)}</span>
+      <span class="cat-t"><b>${esc(titulo)}</b>${c.titulo && c.cursiva ? `<em>${esc(c.cursiva)}</em>` : ""}<small>${String(c.bajada || "").trim() ? esc(c.bajada.trim()) : `${prods.length} producto${prods.length === 1 ? "" : "s"}`}</small>${c.nota ? `<i>${esc(c.nota)}</i>` : ""}</span>
+      <span class="cat-sel" hidden></span>
+      <span class="desde">${min != null ? `<small>desde</small><b>${money(min)}</b>` : `<small>precio</small><b>a consultar</b>`}</span>
+    </button>
+    <div class="cat-b" id="catb${ci}" role="region" aria-labelledby="cath${ci}"><div><ul class="cat-in">${body}</ul></div></div>
   </section>`;
 }).filter(Boolean);
-$("#lista").innerHTML = sheets.length ? sheets.join("") :
+$("#lista").innerHTML = cards.length ? `<div class="cats">${cards.join("")}</div>` :
   `<section class="sheet"><div class="rings" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
     <h2>Lista<em>en preparación</em></h2><p class="empty">Estamos actualizando los precios. Escribinos por WhatsApp y te los pasamos.</p></section>`;
-$("#lista").style.cssText = "display:flex; flex-direction:column; gap:34px";
 if (anyStrike) $("#legend").hidden = false;
+
+/* Acordeón: una sección abierta a la vez */
+function setOpen(sec, on){
+  sec.classList.toggle("open", on);
+  sec.querySelector(".cat-h").setAttribute("aria-expanded", on);
+  sec.querySelectorAll(".cat-b button").forEach(b => b.tabIndex = on ? 0 : -1);
+}
+document.querySelectorAll(".cat").forEach((sec, i) => setOpen(sec, i === 0));
+$("#lista").addEventListener("click", e => {
+  const h = e.target.closest(".cat-h"); if (!h) return;
+  const sec = h.closest(".cat"), on = !sec.classList.contains("open");
+  document.querySelectorAll(".cat").forEach(x => setOpen(x, x === sec && on));
+  if (on) setTimeout(() => { const top = sec.getBoundingClientRect().top; if (top < 10 || top > innerHeight * 0.6) scrollTo({ top: top + scrollY - 12, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); }, 320);
+});
+if (window.KOBU_PREVIEW) addEventListener("message", e => {
+  const m = e.data || {}; if (m.kobu !== "focus") return;
+  const el = document.querySelector(`[data-pid="${CSS.escape(m.pid)}"]`); if (!el) return;
+  const sec = el.closest(".cat"); document.querySelectorAll(".cat").forEach(x => setOpen(x, x === sec));
+  setTimeout(() => { scrollTo({ top: el.getBoundingClientRect().top + scrollY - 90, behavior: "smooth" }); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }, 330);
+});
 
 /* Cantidades */
 $("#lista").addEventListener("click", e => {
@@ -402,14 +526,15 @@ $("#lista").addEventListener("click", e => {
   update(true);
 });
 
-function lines(){ return Object.keys(ITEMS).filter(k => qty[k]).map(k => ({ ...ITEMS[k], q: qty[k], sub: qty[k] * ITEMS[k].precio })); }
+function lines(){ return Object.keys(ITEMS).filter(k => qty[k]).map(k => ({ ...ITEMS[k], q: qty[k], sub: ITEMS[k].precio == null ? null : qty[k] * ITEMS[k].precio })); }
+const totalOf = L => L.reduce((a, l) => a + (l.sub || 0), 0), askOf = L => L.some(l => l.sub == null);
 function message(){
   const L = lines(), negocio = $("#bName").value.trim(), nota = $("#bNote").value.trim();
   const out = [];
   if (L.length){
     out.push(`¡Hola Kobu! Quiero hacer un pedido mayorista${negocio ? ` para *${negocio}*` : ""}.`, "");
-    L.forEach(l => out.push(`• ${l.q} × ${l.nombre} — ${money(l.sub)}`));
-    out.push("", `*Total mayorista: ${money(L.reduce((a, l) => a + l.sub, 0))}*`);
+    L.forEach(l => out.push(`• ${l.q} × ${l.nombre} — ${l.sub == null ? "precio a consultar" : money(l.sub)}`));
+    out.push("", `*Total mayorista: ${money(totalOf(L))}*${askOf(L) ? " (+ productos a consultar)" : ""}`);
   } else {
     out.push(`¡Hola Kobu! Vi la lista mayorista${negocio ? ` (soy de *${negocio}*)` : ""} y quería hacerles una consulta.`);
   }
@@ -418,13 +543,14 @@ function message(){
   return out.join("\n");
 }
 function update(bump){
-  const L = lines(), n = L.reduce((a, l) => a + l.q, 0), tot = L.reduce((a, l) => a + l.sub, 0);
+  const L = lines(), n = L.reduce((a, l) => a + l.q, 0), tot = totalOf(L), ask = askOf(L);
   $("#count").textContent = n; $("#count").hidden = !n;
   $("#barTxt").textContent = n ? "Enviar pedido" : "Consultar por WhatsApp";
-  $("#total").textContent = money(tot); $("#total").hidden = !n;
+  $("#total").textContent = money(tot) + (ask ? " +" : ""); $("#total").hidden = !n;
   $("#sum").hidden = !n;
-  $("#sum").innerHTML = L.map(l => `<li><span>${l.q} × ${esc(l.nombre)}</span><span>${money(l.sub)}</span></li>`).join("") + (n ? `<li class="tot"><span>Total mayorista</span><span>${money(tot)}</span></li>` : "");
+  $("#sum").innerHTML = L.map(l => `<li><span>${l.q} × ${esc(l.nombre)}</span><span>${l.sub == null ? "a consultar" : money(l.sub)}</span></li>`).join("") + (n ? `<li class="tot"><span>Total mayorista${ask ? " <small>(+ a consultar)</small>" : ""}</span><span>${money(tot)}</span></li>` : "");
   $("#send").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message())}`;
+  document.querySelectorAll(".cat").forEach(sec => { const ci = +sec.dataset.cat, q = L.filter(l => l.cat === ci).reduce((a, l) => a + l.q, 0), el = sec.querySelector(".cat-sel"); el.textContent = q; el.hidden = !q; el.setAttribute("aria-label", q + " en tu pedido"); });
   if (bump){ const a = $("#send"); a.classList.remove("bump"); void a.offsetWidth; a.classList.add("bump"); }
 }
 $("#form").addEventListener("input", () => update());

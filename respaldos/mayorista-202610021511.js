@@ -3,73 +3,65 @@
    Lo guarda KobuEditor (pestaña Mayorista). Es una lista aparte del menú:
    secciones, productos, ingredientes, precio mayorista y precio al público
    (este último se muestra tachado). Sin precio mayorista = "Precio a consultar".
-   Última edición: 2/10/2026, 12:20:21
+   Última edición: 1/10/2026, 04:57:59
    ===================================================================== */
 
 window.KOBU_MAYORISTA = {
-  actualizado: "2026-10-02",
+  actualizado: "2026-10-01",
   categorias: [
     {
       id: "clasicos",
       titulo: "Budines",
       cursiva: "clásicos",
       oscuro: true,
-      icono: "budin",
       productos: [
         {
           id: "vainilla",
           nombre: "Vainilla",
-          precio: 2900,
-          precioPublico: 3500,
-          ingredientes: "Harina, Azúcar, Leche, Aceite, Huevos, Esencia de Vainilla."
+          precio: 2800,
+          precioPublico: 3500
         },
         {
           id: "limon",
           nombre: "Limón",
-          precio: 2900,
-          precioPublico: 3500,
-          ingredientes: "Harina, Azúcar, Leche, Aceite, Huevos, Ralladura de Limón."
+          precio: 2800,
+          precioPublico: 3500
         },
         {
           id: "naranja",
           nombre: "Naranja",
-          precio: 2900,
-          precioPublico: 3500,
-          ingredientes: "Harina, Azúcar, Leche, Aceite, Huevos, Ralladura de Naranja."
+          precio: 2800,
+          precioPublico: 3500
         },
         {
           id: "banana",
           nombre: "Banana",
-          precio: 2900,
-          precioPublico: 3500,
-          ingredientes: "Harina, Azúcar, Leche, Aceite, Huevos, Banana."
+          precio: 2800,
+          precioPublico: 3500
         },
         {
           id: "marmolado",
           nombre: "Marmolado",
-          precio: 2900,
-          precioPublico: 3500,
-          ingredientes: "Harina, Azúcar, Cacao en polvo, Leche, Aceite, Huevos."
+          precio: 2800,
+          precioPublico: 3500
         },
         {
           id: "chips-chocolate",
           nombre: "Chips de chocolate",
-          precio: 2900,
-          precioPublico: 3500,
-          ingredientes: "Harina, Azúcar, Leche, Aceite, Chips de chocolate, Huevos, Esencia de Vainilla."
+          precio: 2800,
+          precioPublico: 3500
         },
         {
           id: "naranja-miel",
           nombre: "Naranja y miel",
-          precio: 3300,
-          precioPublico: 4000,
-          ingredientes: "Harina, Azúcar, Leche, Aceite, Miel, Huevos, Ralladura de Naranja."
+          precio: 3200,
+          precioPublico: 4000
         },
         {
           id: "budin-xl",
           nombre: "Budín XL",
           descripcion: "Cualquiera de los sabores clásicos, en tamaño grande.",
-          precio: 6200,
+          precio: 6000,
           precioPublico: 7500
         }
       ]
@@ -78,32 +70,34 @@ window.KOBU_MAYORISTA = {
       id: "premium",
       titulo: "Budines",
       cursiva: "Premium XL",
-      icono: "estrella",
       productos: [
         {
           id: "budin-kobu",
           nombre: "Budín Kobu",
           subtitulo: "Budín de Malbec",
           descripcion: "Con chocolate y chips de chocolate.",
-          precio: 7900,
-          precioPublico: 9500,
-          ingredientes: "Harina, Azúcar, Leche, Aceite, Cacao Amargo, Vino Malbec, Chips de chocolate, Huevos."
+          precio: 7600,
+          precioPublico: 9500
         },
         {
           id: "budin-blues",
           nombre: "Budín Blues",
           subtitulo: "Budín de vino blanco",
           descripcion: "Con vainilla y chips de chocolate blanco.",
-          precio: 7900,
-          precioPublico: 9500,
-          ingredientes: "Harina, Azúcar, Leche, Aceite, Vino Blanco, Chips de chocolate blanco, Huevos, Esencia de vainilla."
+          precio: 7600,
+          precioPublico: 9500
+        },
+        {
+          id: "cafe-almendras",
+          nombre: "Café y almendras",
+          precio: 7400,
+          precioPublico: 9300
         },
         {
           id: "licor-ddl",
           nombre: "Licor de dulce de leche",
-          precio: 6900,
-          precioPublico: 8300,
-          ingredientes: "Harina, Azúcar, Leche, Aceite, Licor de dulce de leche, Huevos, Esencia de Vainilla."
+          precio: 6600,
+          precioPublico: 8300
         }
       ]
     },
@@ -112,25 +106,31 @@ window.KOBU_MAYORISTA = {
       titulo: "Bocaditos",
       cursiva: "dulces & salados",
       bajada: "Brownies, lemonies, kobulitos y skoncitos",
-      icono: "cafe",
+      icono: "pila",
       productos: [
         {
           id: "brownies",
           nombre: "Brownies",
           descripcion: "Cuadraditos húmedos de chocolate intenso.",
-          ingredientes: "Harina, Cacao en polvo, Aceite, Azúcar, Huevos.",
           variantes: [
             {
               id: "porcion",
               nombre: "Cada porción",
-              precio: 2300,
+              precio: 2200,
               precioPublico: 2800
+            },
+            {
+              id: "chico",
+              nombre: "Entero chico",
+              detalle: "Bandeja 19 × 19 cm, rinde 6 porciones",
+              precio: 12800,
+              precioPublico: 16000
             },
             {
               id: "grande",
               nombre: "Entero grande",
               detalle: "Bandeja 22 × 28 cm, rinde 8 porciones",
-              precio: 18000,
+              precio: 16000,
               precioPublico: 20000
             }
           ]
@@ -143,7 +143,7 @@ window.KOBU_MAYORISTA = {
             {
               id: "porcion",
               nombre: "Cada porción",
-              precio: 2100,
+              precio: 2000,
               precioPublico: 2500
             }
           ]
@@ -156,7 +156,7 @@ window.KOBU_MAYORISTA = {
             {
               id: "porcion",
               nombre: "Cada porción",
-              precio: 1500,
+              precio: 1400,
               precioPublico: 1800
             }
           ]
@@ -170,7 +170,7 @@ window.KOBU_MAYORISTA = {
               id: "bolsita",
               nombre: "Cada bolsita",
               detalle: "8 unidades",
-              precio: 2200,
+              precio: 2100,
               precioPublico: 2600
             }
           ]
