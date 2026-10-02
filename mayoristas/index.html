@@ -121,9 +121,18 @@
   .step.on .qty{display:block}
 
   /* Secciones en tarjetas (acordeón) */
-  .cats{display:flex; flex-direction:column; gap:12px}
-  .cat{background:var(--paper); border-radius:18px; overflow:hidden}
-  .cat-h{width:100%; display:flex; align-items:center; gap:12px; padding:14px 14px 12px; background:none; border:0; text-align:left; font:inherit; color:inherit; cursor:pointer}
+  .cats{display:flex; flex-direction:column; gap:30px; padding-top:12px}
+  .cat{position:relative; background:var(--paper); border-radius:6px 6px 18px 18px; box-shadow:0 8px 20px -14px rgba(36,13,14,.5)}
+  .cat .rings{top:-12px}
+  .cat.dark{background:var(--bordo-2); color:var(--cream)}
+  .cat.dark .rings span::before, .cat.dark .rings span::after{background:#2A1011}
+  .cat.dark .cat-ic{background:var(--cream); color:var(--bordo-2)}
+  .cat.dark .cat-t em, .cat.dark .cat-t i{color:var(--pink)}
+  .cat.dark .cat-t small{color:#E4C6BE}
+  .cat.dark .desde{background:var(--pink); color:var(--ink)}
+  .cat.dark .cat-sel{background:var(--cream)}
+  .cat-h{width:100%; display:flex; align-items:center; gap:12px; padding:30px 14px 14px; background:none; border:0; text-align:left; font:inherit; color:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent; touch-action:manipulation; border-radius:6px 6px 18px 18px}
+  .cat-h:focus-visible{outline:2px solid var(--pink); outline-offset:-4px}
   .cat-ic{width:44px; height:44px; border-radius:50%; background:var(--ink); color:var(--cream); display:grid; place-items:center; flex:none}
   .cat-ic svg{width:22px; height:22px}
   .cat-t{flex:1; min-width:0; display:flex; flex-direction:column; gap:3px}
@@ -135,10 +144,10 @@
   .desde small{font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; opacity:.85}
   .desde b{font-size:15.5px; font-weight:700; letter-spacing:.01em}
   .cat-sel{flex:none; min-width:22px; height:22px; border-radius:99px; background:var(--pink); color:var(--ink); font-size:12px; font-weight:700; display:grid; place-items:center; padding:2px 6px 0}
-  .cat-b{display:grid; grid-template-rows:0fr; transition:grid-template-rows .3s ease}
-  .cat.open .cat-b{grid-template-rows:1fr}
-  .cat-b > div{overflow:hidden; min-height:0}
-  .cat-in{list-style:none; background:#FFFDF9; margin:0 10px 10px; border-radius:12px; padding:2px 14px}
+  .cat-b{height:0; overflow:hidden}
+  .cat.open .cat-b{height:auto}
+  .cat-b.anim{will-change:height}
+  .cat-in{list-style:none; color:var(--text); background:#FFFDF9; margin:0 10px 10px; border-radius:12px; padding:2px 14px}
   .cat-in .item{padding:12px 0; border-top:1px solid rgba(46,20,20,.1)}
   .cat-in .item:first-child{border-top:0}
   .cat-in .item-name{font-size:16.5px; font-weight:600; letter-spacing:.01em}
@@ -154,24 +163,23 @@
   .row.off .pcol b{text-decoration:line-through}
   .cat-in .step button{width:34px; height:34px; font-size:21px}
   .cat-in .step{height:34px}
-  @media (prefers-reduced-motion: reduce){ .cat-b{transition:none} }
   .empty{text-align:center; color:var(--muted); font-size:15px; margin:18px 0 0}
 
   /* Datos del pedido */
   /* Por qué Kobu */
-  .why-card{background:#FFFDF9; border:1px solid var(--line); border-radius:18px; padding:22px 18px 18px}
-  .why-card h2{margin:0; font-family:var(--serif); font-weight:400; font-size:clamp(28px, 7.5vw, 34px); line-height:1.05; text-transform:uppercase; text-align:center}
-  .natural{display:flex; align-items:center; gap:14px; margin-top:18px; background:var(--bordo); color:var(--cream); border-radius:14px; padding:14px 16px 12px}
-  .natural .ic{flex:none; width:44px; height:44px; border-radius:50%; background:var(--cream); color:var(--bordo); display:grid; place-items:center}
+  .sec-h{margin:0 0 16px; font-family:var(--serif); font-weight:400; font-size:clamp(28px, 7.5vw, 36px); line-height:1.05; text-transform:uppercase; text-align:center; text-wrap:balance}
+  .sec-h em{display:block; font-family:var(--script); font-style:normal; text-transform:none; font-size:.95em; line-height:1.1; color:var(--bordo)}
+  .natural{display:flex; align-items:center; gap:14px; background:var(--bordo); color:var(--cream); border-radius:16px; padding:15px 16px 13px}
+  .natural .ic{flex:none; width:46px; height:46px; border-radius:50%; background:var(--cream); color:var(--bordo); display:grid; place-items:center}
   .natural .ic svg{width:24px; height:24px}
-  .natural strong{display:block; font-size:16.5px; line-height:1.25; letter-spacing:.02em}
+  .natural strong{display:block; font-size:17px; line-height:1.25; letter-spacing:.02em}
   .natural span{display:block; margin-top:3px; font-size:13.5px; font-weight:300; color:#F3DCD6}
-  .why{list-style:none; margin:16px 0 0; padding:0; display:grid; gap:12px}
-  .why li{display:grid; grid-template-columns:40px 1fr; gap:14px; align-items:start}
-  .why .ic{width:40px; height:40px; border-radius:50%; background:var(--ink); color:var(--cream); display:grid; place-items:center}
-  .why .ic svg{width:20px; height:20px}
-  .why strong{display:block; font-size:16px; padding-top:3px}
-  .why span{display:block; font-size:14px; color:var(--muted); font-weight:300; line-height:1.4}
+  .why3{list-style:none; margin:10px 0 0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px}
+  .why3 li{background:var(--paper); border-radius:14px; padding:14px 8px 12px; text-align:center; display:flex; flex-direction:column; align-items:center; gap:4px}
+  .why3 .ic{width:38px; height:38px; border-radius:50%; background:var(--ink); color:var(--cream); display:grid; place-items:center; margin-bottom:4px}
+  .why3 .ic svg{width:19px; height:19px}
+  .why3 strong{font-size:14px; line-height:1.2; letter-spacing:.01em}
+  .why3 span{font-size:12.5px; line-height:1.35; color:var(--muted); font-weight:300}
   .form-card{background:var(--paper); border-radius:18px; padding:22px 18px 20px}
   .form-card h2{margin:0; font-family:var(--serif); font-weight:400; font-size:clamp(28px, 7.5vw, 34px); line-height:1.05; text-transform:uppercase; text-align:center}
   .form-card h2 em{display:block; font-family:var(--script); font-style:normal; text-transform:none; font-size:.95em; color:var(--bordo)}
@@ -331,22 +339,25 @@
 </header>
 
 <main>
-  <div id="lista"></div>
-
-  <section class="why-card" aria-labelledby="tw">
-    <h2 id="tw">Por qué Kobu</h2>
+  <section class="why-sec" aria-labelledby="tw">
+    <h2 class="sec-h" id="tw">Por qué Kobu</h2>
     <div class="natural">
       <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-8 5-13 14-13 0 9-5 14-13 14"/><path d="M5 19c3-4.5 6.5-7.5 10-9.5"/></svg></span>
       <div><strong>Sin conservantes ni saborizantes artificiales</strong><span>Sin aditivos. Sabor casero auténtico, como recién hecho en casa.</span></div>
     </div>
-    <ul class="why">
+    <ul class="why3">
       <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 3c-1 2.5 1.5 3.5 0 6M8 5c-.7 1.6.9 2.4 0 4M16 5c-.7 1.6.9 2.4 0 4"/><path d="M4 12h16l-1.5 7.5a2 2 0 0 1-2 1.5h-9a2 2 0 0 1-2-1.5Z"/></svg></span>
-        <div><strong>Recién horneado</strong><span>Producción artesanal con insumos frescos de primera calidad.</span></div></li>
+        <strong>Recién horneado</strong><span>Insumos frescos de primera calidad.</span></li>
       <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3.5 2.6 5.3 5.8.8-4.2 4.1 1 5.8L12 16.8l-5.2 2.7 1-5.8-4.2-4.1 5.8-.8Z"/></svg></span>
-        <div><strong>Clientes que vuelven</strong><span>Más de 25 reseñas de 5 estrellas en Google.</span></div></li>
+        <strong>Clientes que vuelven</strong><span>Más de 25 reseñas de 5 estrellas en Google.</span></li>
       <li><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/></svg></span>
-        <div><strong>Trato directo</strong><span>Hablás con quien cocina: pedidos, cantidades y entregas se coordinan por WhatsApp.</span></div></li>
+        <strong>Trato directo</strong><span>Hablás con quien cocina, por WhatsApp.</span></li>
     </ul>
+  </section>
+
+  <section class="menu-sec" aria-labelledby="tm">
+    <h2 class="sec-h" id="tm">Qué podés sumar<em>a tu mostrador</em></h2>
+    <div id="lista"></div>
   </section>
 
   <section class="form-card" id="pedido" aria-labelledby="tp">
@@ -464,9 +475,11 @@ const priceCol = r => {
   return `<span class="pcol">${strike ? `<s aria-label="Precio al público ${money(r.pub)}">${money(r.pub)}</s>` : ""}<b>${money(r.may)}</b></span>`;
 };
 const ctrl = r => r.off ? `<span class="off-tag">Agotado hoy</span>` : stepHtml(r.key, r.full);
+let vis = 0;
 const cards = (MAY.categorias || []).map((c, ci) => {
   const prods = (c.productos || []).filter(p => String(p.nombre || "").trim());
   if (!prods.length) return "";
+  const dark = vis++ % 2 === 0;
   let min = null;
   const body = prods.map(p => {
     const vs = p.variantes && p.variantes.length;
@@ -481,7 +494,8 @@ const cards = (MAY.categorias || []).map((c, ci) => {
     return `<li class="item" data-pid="${esc(p.id)}">${name}${info}${rows.map(r => `<div class="row${r.off ? " off" : ""}"><div class="row-l"><div class="row-label">${esc(r.label)}${r.detalle ? `<small>${esc(r.detalle)}</small>` : ""}</div></div>${priceCol(r)}${ctrl(r)}</div>`).join("")}</li>`;
   }).join("");
   const titulo = c.titulo || c.cursiva || "";
-  return `<section class="cat" data-cat="${ci}">
+  return `<section class="cat${dark ? " dark" : ""}" data-cat="${ci}">
+    <div class="rings" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
     <button type="button" class="cat-h" id="cath${ci}" aria-expanded="false" aria-controls="catb${ci}">
       <span class="cat-ic" aria-hidden="true">${icono(c)}</span>
       <span class="cat-t"><b>${esc(titulo)}</b>${c.titulo && c.cursiva ? `<em>${esc(c.cursiva)}</em>` : ""}<small>${String(c.bajada || "").trim() ? esc(c.bajada.trim()) : `${prods.length} producto${prods.length === 1 ? "" : "s"}`}</small>${c.nota ? `<i>${esc(c.nota)}</i>` : ""}</span>
@@ -496,24 +510,47 @@ $("#lista").innerHTML = cards.length ? `<div class="cats">${cards.join("")}</div
     <h2>Lista<em>en preparación</em></h2><p class="empty">Estamos actualizando los precios. Escribinos por WhatsApp y te los pasamos.</p></section>`;
 if (anyStrike) $("#legend").hidden = false;
 
-/* Acordeón: una sección abierta a la vez */
+/* Acordeón: una sección abierta a la vez.
+   La altura se anima con Web Animations (funciona igual en celular y en compu) y,
+   si se cierra una sección de arriba, se compensa el scroll para que la que tocaste
+   no salte de lugar. */
+const RM = matchMedia("(prefers-reduced-motion: reduce)");
+const CATS = [...document.querySelectorAll(".cat")];
 function setOpen(sec, on){
   sec.classList.toggle("open", on);
   sec.querySelector(".cat-h").setAttribute("aria-expanded", on);
   sec.querySelectorAll(".cat-b button").forEach(b => b.tabIndex = on ? 0 : -1);
 }
-document.querySelectorAll(".cat").forEach((sec, i) => setOpen(sec, i === 0));
+function animH(el, from, to, done){
+  if (el._anim) el._anim.cancel();
+  if (RM.matches || !el.animate || from === to){ el._anim = null; if (done) done(); return; }
+  el.classList.add("anim");
+  const a = el.animate([{ height: from + "px" }, { height: to + "px" }], { duration: Math.min(380, 180 + Math.abs(to - from) * 0.15), easing: "cubic-bezier(.2,.7,.3,1)" });
+  el._anim = a;
+  a.onfinish = () => { el.classList.remove("anim"); el._anim = null; if (done) done(); };
+  a.oncancel = () => { el.classList.remove("anim"); };
+}
+const jump = y => scrollTo({ top: y, left: 0, behavior: "instant" });
+CATS.forEach((sec, i) => setOpen(sec, i === 0));
 $("#lista").addEventListener("click", e => {
   const h = e.target.closest(".cat-h"); if (!h) return;
-  const sec = h.closest(".cat"), on = !sec.classList.contains("open");
-  document.querySelectorAll(".cat").forEach(x => setOpen(x, x === sec && on));
-  if (on) setTimeout(() => { const top = sec.getBoundingClientRect().top; if (top < 10 || top > innerHeight * 0.6) scrollTo({ top: top + scrollY - 12, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); }, 320);
+  const sec = h.closest(".cat"), body = sec.querySelector(".cat-b"), opening = !sec.classList.contains("open");
+  if (!opening){ const from = body.offsetHeight; setOpen(sec, false); animH(body, from, 0); return; }
+  const before = h.getBoundingClientRect().top;
+  CATS.forEach(x => { if (x !== sec && x.classList.contains("open")){ const b = x.querySelector(".cat-b"); if (b._anim) b._anim.cancel(); setOpen(x, false); } });
+  const diff = h.getBoundingClientRect().top - before;
+  if (Math.abs(diff) > 0.5) jump(scrollY + diff);
+  setOpen(sec, true);
+  animH(body, 0, body.offsetHeight, () => {
+    const top = sec.getBoundingClientRect().top;
+    if (top < 0 || top > innerHeight * 0.55) scrollTo({ top: top + scrollY - 12, behavior: RM.matches ? "auto" : "smooth" });
+  });
 });
 if (window.KOBU_PREVIEW) addEventListener("message", e => {
   const m = e.data || {}; if (m.kobu !== "focus") return;
   const el = document.querySelector(`[data-pid="${CSS.escape(m.pid)}"]`); if (!el) return;
-  const sec = el.closest(".cat"); document.querySelectorAll(".cat").forEach(x => setOpen(x, x === sec));
-  setTimeout(() => { scrollTo({ top: el.getBoundingClientRect().top + scrollY - 90, behavior: "smooth" }); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }, 330);
+  const sec = el.closest(".cat"); CATS.forEach(x => setOpen(x, x === sec));
+  requestAnimationFrame(() => { scrollTo({ top: el.getBoundingClientRect().top + scrollY - 90, behavior: "smooth" }); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); });
 });
 
 /* Cantidades */
