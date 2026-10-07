@@ -1008,7 +1008,7 @@
     <div class="total"><span>Total</span><span id="dTotal">$ 0</span></div>
     <div class="warn" id="warn" hidden>Tu pedido tiene productos <strong>a pedido</strong>. Coordinamos la fecha de entrega por WhatsApp.</div>
     <p class="faq-note">¿Dudas con horarios, envíos o pagos? <button type="button" data-faq>Preguntas frecuentes</button></p>
-    <form class="form" id="form">
+    <form class="form" id="form"><input id="fWeb" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <label for="fName">Tu nombre<input id="fName" autocomplete="name" placeholder="Ej: Sofía"></label>
       <label>Entrega
         <div class="seg" id="seg"><button type="button" data-v="Retiro" aria-pressed="true">Retiro</button><button type="button" data-v="Envío" aria-pressed="false">Envío</button></div>
@@ -1277,11 +1277,11 @@ function numeroPedido(){
 
 let entrega = "Retiro";
 const opts = {};
-function message(){
+function message(num){
   let total = 0;
   const lines = [...cart.values()].map(l => { total += l.qty*l.price; return `• ${l.qty} × ${l.name}${l.detail?` (${l.detail})`:""}: ${money(l.qty*l.price)}`; });
   const name = $("#fName").value.trim(), when = $("#fWhen").value, note = $("#fNote").value.trim(), addr = $("#fAddr").value.trim();
-  const out = [`¡Hola Kobu! Quiero hacer este pedido:`, `*Pedido ${numeroPedido()}*`, "", ...lines, "", `*Total: ${money(total)}*`, ""];
+  const out = [`¡Hola Kobu! Quiero hacer este pedido:`, `*Pedido ${num || numeroPedido()}*`, "", ...lines, "", `*Total: ${money(total)}*`, ""];
   if (name) out.push(`Nombre: ${name}`);
   out.push(entrega === "Envío" ? `Entrega: Envío${addr ? ` a ${addr}` : ""}` : `Entrega: Retiro en domicilio - _${NEG.retiro}_`);
   if (when) out.push(`Para: ${fechaLarga(when)}`);
@@ -1290,7 +1290,39 @@ function message(){
   if (note) out.push(`Notas adicionales: ${note}`);
   return out.join("\n");
 }
-function waLink(){ return `https://wa.me/${NEG.whatsapp}?text=${encodeURIComponent(message())}`; }
+function waLink(num){ return `https://wa.me/${NEG.whatsapp}?text=${encodeURIComponent(message(num))}`; }
+
+/* Pedido a la app de Kobu: se manda en segundo plano al tocar "Enviar". WhatsApp se abre igual aunque esto falle.
+   Con ?prueba en el link, los pedidos van a la cuenta de prueba (y la pestaña dice [Prueba]); ?prueba=0 lo apaga. */
+const T0 = Date.now();
+const PRUEBA = (() => { try {
+  const q = new URLSearchParams(location.search);
+  if (q.has("prueba")) sessionStorage.setItem(KNS + "prueba", q.get("prueba") === "0" ? "0" : "1");
+  return sessionStorage.getItem(KNS + "prueba") === "1";
+} catch (e) { return false; } })();
+if (PRUEBA && !window.KOBU_PREVIEW) document.title = "[Prueba] " + document.title;
+function enviarPedidoApp(datos){
+  try {
+    const url = String((K.negocio || {}).pedidosApp || "");
+    if (window.KOBU_PREVIEW || !datos.items.length || !/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url)) return;
+    const trampa = document.getElementById("fWeb");
+    const body = JSON.stringify(Object.assign({}, datos, { t: Date.now() - T0, web: trampa ? trampa.value : "", prueba: PRUEBA || undefined }));
+    const u = url + "?action=pedidoWeb";
+    if (window.fetch) fetch(u, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body }).catch(() => {});
+    else if (navigator.sendBeacon) navigator.sendBeacon(u, body);
+  } catch (e) {}
+}
+/* Lo que va a la app: los mismos productos, cantidades y datos del mensaje de WhatsApp */
+function pedidoParaApp(num){
+  const items = [...cart.entries()].map(([k, l]) => {
+    const [path, o] = k.split("~"); const [id, variante] = path.split(".");
+    const p = PROD[id] ? PROD[id].p : null;
+    const opcion = o === "sin" ? "__sin" : o !== undefined && p && p.opciones ? String((p.opciones.lista || [])[+o] || "") : "";
+    return { id, variante: variante || "", opcion, qty: l.qty, nombre: l.name, detalle: l.detail || "", precio: l.price };
+  });
+  return { origen: "menu", numero: num, nombre: $("#fName").value.trim(), entrega, direccion: entrega === "Envío" ? $("#fAddr").value.trim() : "",
+    fecha: $("#fWhen").value, franja: opts.franja || "", pago: opts.pago || "", notas: $("#fNote").value.trim(), items };
+}
 
 /* Ventanas: foco adentro mientras están abiertas y vuelta al botón que las abrió */
 const openers = new Map();
@@ -1661,7 +1693,8 @@ function pedidoEnviado(num){
 }
 $("#send").addEventListener("click", () => {
   const num = numeroPedido();
-  $("#send").href = waLink();
+  $("#send").href = waLink(num);
+  enviarPedidoApp(pedidoParaApp(num));
   setTimeout(() => pedidoEnviado(num), 60);
 });
 $("#sentDone").onclick = () => {

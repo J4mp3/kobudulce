@@ -363,7 +363,7 @@
 
   <section class="form-card" id="pedido" aria-labelledby="tp">
     <h2 id="tp">Contactanos<em>por WhatsApp</em></h2>
-    <form class="form" id="form">
+    <form class="form" id="form"><input id="fWeb" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <ul class="sum" id="sum" hidden></ul>
       <label class="field"><span>Nombre del negocio</span><input id="bName" autocomplete="organization"></label>
       <label class="field"><span>Mensaje</span><textarea id="bNote"></textarea></label>
@@ -558,13 +558,13 @@ $("#lista").addEventListener("click", e => {
   update(true);
 });
 
-function lines(){ return Object.keys(ITEMS).filter(k => qty[k]).map(k => ({ ...ITEMS[k], q: qty[k], sub: ITEMS[k].precio == null ? null : qty[k] * ITEMS[k].precio })); }
+function lines(){ return Object.keys(ITEMS).filter(k => qty[k]).map(k => ({ key: k, ...ITEMS[k], q: qty[k], sub: ITEMS[k].precio == null ? null : qty[k] * ITEMS[k].precio })); }
 const totalOf = L => L.reduce((a, l) => a + (l.sub || 0), 0), askOf = L => L.some(l => l.sub == null);
-function message(){
+function message(num){
   const L = lines(), negocio = $("#bName").value.trim(), nota = $("#bNote").value.trim();
   const out = [];
   if (L.length){
-    out.push(`¡Hola Kobu! Quiero hacer un pedido mayorista${negocio ? ` para *${negocio}*` : ""}.`, "");
+    out.push(`¡Hola Kobu! Quiero hacer un pedido mayorista${negocio ? ` para *${negocio}*` : ""}.`, `*Pedido ${num || numeroMay()}*`, "");
     L.forEach(l => out.push(`• ${l.q} × ${l.nombre} — ${l.sub == null ? "precio a consultar" : money(l.sub)}`));
     out.push("", `*Total mayorista: ${money(totalOf(L))}*${askOf(L) ? " (+ productos a consultar)" : ""}`);
   } else {
@@ -587,6 +587,39 @@ function update(bump){
 }
 $("#form").addEventListener("input", () => update());
 $("#form").addEventListener("submit", e => e.preventDefault());
+/* Número de pedido mayorista: MAY-DíaMes-HoraMinuto (hora de Buenos Aires) */
+function numeroMay(){
+  const p = new Intl.DateTimeFormat("en-CA", { timeZone: "America/Argentina/Buenos_Aires", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hour12: false })
+    .formatToParts(new Date()).reduce((o, x) => (o[x.type] = x.value, o), {});
+  return `MAY-${p.day}${p.month}-${String(+p.hour % 24).padStart(2, "0")}${p.minute}`;
+}
+/* Pedido a la app de Kobu: se manda en segundo plano al tocar "Enviar". WhatsApp se abre igual aunque esto falle.
+   Con ?prueba en el link, los pedidos van a la cuenta de prueba (y la pestaña dice [Prueba]); ?prueba=0 lo apaga. */
+const T0 = Date.now();
+const PRUEBA = (() => { try {
+  const q = new URLSearchParams(location.search);
+  if (q.has("prueba")) sessionStorage.setItem(KNS + "prueba", q.get("prueba") === "0" ? "0" : "1");
+  return sessionStorage.getItem(KNS + "prueba") === "1";
+} catch (e) { return false; } })();
+if (PRUEBA && !window.KOBU_PREVIEW) document.title = "[Prueba] " + document.title;
+function enviarPedidoApp(datos){
+  try {
+    const url = String((K.negocio || {}).pedidosApp || "");
+    if (window.KOBU_PREVIEW || !datos.items.length || !/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url)) return;
+    const trampa = document.getElementById("fWeb");
+    const body = JSON.stringify(Object.assign({}, datos, { t: Date.now() - T0, web: trampa ? trampa.value : "", prueba: PRUEBA || undefined }));
+    const u = url + "?action=pedidoWeb";
+    if (window.fetch) fetch(u, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body }).catch(() => {});
+    else if (navigator.sendBeacon) navigator.sendBeacon(u, body);
+  } catch (e) {}
+}
+$("#send").addEventListener("click", () => {
+  const L = lines(); if (!L.length) return;
+  const num = numeroMay();
+  $("#send").href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(message(num))}`;
+  enviarPedidoApp({ origen: "mayorista", numero: num, negocio: $("#bName").value.trim(), notas: $("#bNote").value.trim(),
+    items: L.map(l => { const [id, variante] = l.key.split("."); return { id, variante: variante || "", qty: l.q, nombre: l.nombre, precio: l.precio }; }) });
+});
 update();
 
 /* Arrancar desde arriba al entrar */

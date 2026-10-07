@@ -10,6 +10,7 @@
 window.KOBU = {
   negocio: {
     whatsapp: "5491127929909",
+    pedidosApp: "https://script.google.com/macros/s/AKfycbxl85jHQxoZj8Wgr4w_HDXnkICuql6GK_tbaqQhcAtiemmQou5J53aiZvU2kBY7ZcotMg/exec",
     horaDeCorte: 16,
     diasSinEntrega: [],
     retiro: "Paso 1405, Ingeniero Maschwitz",
