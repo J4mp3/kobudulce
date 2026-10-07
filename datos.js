@@ -4,7 +4,7 @@
    el editor, pero también se puede editar a mano con cuidado:
    · textos entre comillas, precios solo con números, una coma después de cada cosa.
    · no cambies los "id" de lo que ya existe.
-   Última edición: 6/10/2026, 10:53:05
+   Última edición: 6/10/2026, 11:02:29
    ===================================================================== */
 
 window.KOBU = {

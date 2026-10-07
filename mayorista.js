@@ -3,7 +3,7 @@
    Lo guarda KobuEditor (pestaña Mayorista). Es una lista aparte del menú:
    secciones, productos, ingredientes, precio mayorista y precio al público
    (este último se muestra tachado). Sin precio mayorista = "Precio a consultar".
-   Última edición: 6/10/2026, 10:53:05
+   Última edición: 6/10/2026, 11:02:29
    ===================================================================== */
 
 window.KOBU_MAYORISTA = {
@@ -15,6 +15,7 @@ window.KOBU_MAYORISTA = {
       cursiva: "clásicos",
       oscuro: true,
       icono: "budin",
+      nota: "250 g",
       productos: [
         {
           id: "vainilla",
@@ -79,6 +80,7 @@ window.KOBU_MAYORISTA = {
       titulo: "Budines",
       cursiva: "Premium XL",
       icono: "estrella",
+      nota: "600 g",
       productos: [
         {
           id: "budin-kobu",
