@@ -3,7 +3,7 @@
    Lo guarda KobuEditor (pestaña Mayorista). Es una lista aparte del menú:
    secciones, productos, ingredientes, precio mayorista y precio al público
    (este último se muestra tachado). Sin precio mayorista = "Precio a consultar".
-   Última edición: 6/10/2026, 11:02:29
+   Última edición: 6/10/2026, 11:13:04
    ===================================================================== */
 
 window.KOBU_MAYORISTA = {

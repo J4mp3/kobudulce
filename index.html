@@ -45,6 +45,7 @@
  ]
 }
 </script>
+<script>/* Cada web guarda lo suyo: las claves llevan la carpeta de esta web */var KNS="kobu@"+location.pathname.replace(/[^/]*$/,"").replace(/\/mayoristas\/$/,"/")+":";</script>
 <title>Kobu Dulce</title>
 <link rel="preload" href="fonts/gloock-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/josefin-sans-400.woff2" as="font" type="font/woff2" crossorigin>
@@ -498,7 +499,7 @@
   if (window.KOBU_PREVIEW) return;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   let arriving = false;
-  try { arriving = sessionStorage.getItem("kobu-trans") === "1"; sessionStorage.removeItem("kobu-trans"); } catch (e) {}
+  try { arriving = sessionStorage.getItem(KNS + "trans") === "1"; sessionStorage.removeItem(KNS + "trans"); } catch (e) {}
   if (arriving && !reduce) {
     c.classList.add("covered");
     const reveal = () => setTimeout(() => { c.classList.add("out"); c.classList.remove("covered"); setTimeout(() => c.classList.remove("out"), 700); }, 120);
@@ -510,7 +511,7 @@
     if (!a || reduce || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     e.preventDefault();
     if (e.clientX || e.clientY) { c.style.setProperty("--x", e.clientX + "px"); c.style.setProperty("--y", e.clientY + "px"); }
-    try { sessionStorage.setItem("kobu-trans", "1"); } catch (err) {}
+    try { sessionStorage.setItem(KNS + "trans", "1"); } catch (err) {}
     c.classList.add("in");
     setTimeout(() => { location.href = a.href; }, 520);
   });
@@ -564,7 +565,7 @@
   const sp = document.getElementById("splash");
   if (window.KOBU_PREVIEW) { sp.remove(); return; }
   let seen = false;
-  try { seen = sessionStorage.getItem("kobu-splash") === "1"; sessionStorage.setItem("kobu-splash", "1"); } catch (e) {}
+  try { seen = sessionStorage.getItem(KNS + "splash") === "1"; sessionStorage.setItem(KNS + "splash", "1"); } catch (e) {}
   if (seen || matchMedia("(prefers-reduced-motion: reduce)").matches) { sp.remove(); return; }
   const done = () => sp.remove();
   sp.addEventListener("animationend", e => { if (e.animationName === "sp-out") done(); });
@@ -1046,10 +1047,16 @@ const $ = s => document.querySelector(s);
 const money = n => "$ " + Number(n).toLocaleString("es-AR");
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const cart = new Map();
+/* Datos guardados en el navegador. Cada web usa sus propias claves (KNS),
+   así dos webs del mismo usuario de GitHub no comparten pedidos ni datos.
+   Lo guardado con el nombre viejo ("kobu-...") se pasa solo a la clave nueva. */
 const store = {
-  get(k){ try { return localStorage.getItem(k); } catch (e) { return null; } },
-  set(k, v){ try { localStorage.setItem(k, v); } catch (e) {} },
-  del(k){ try { localStorage.removeItem(k); } catch (e) {} }
+  get(k){ try {
+    let v = localStorage.getItem(KNS + k);
+    if (v === null){ const viejo = localStorage.getItem("kobu-" + k); if (viejo !== null){ localStorage.setItem(KNS + k, viejo); localStorage.removeItem("kobu-" + k); v = viejo; } }
+    return v; } catch (e) { return null; } },
+  set(k, v){ try { localStorage.setItem(KNS + k, v); } catch (e) {} },
+  del(k){ try { localStorage.removeItem(KNS + k); } catch (e) {} }
 };
 
 /* Hora de Buenos Aires */
@@ -1405,7 +1412,7 @@ function guardarUltimo(){
     const [path, o] = k.split("~"); const [id, variante] = path.split(".");
     return { id, variante: variante || null, opcion: o === "sin" ? "__sin" : o !== undefined ? PROD[id]?.p.opciones?.lista?.[+o] : null, qty: l.qty };
   });
-  if (items.length) store.set("kobu-ultimo", JSON.stringify({ items, fecha: Date.now() }));
+  if (items.length) store.set("ultimo", JSON.stringify({ items, fecha: Date.now() }));
 }
 $("#send").addEventListener("click", guardarUltimo);
 function claveDe(it){
@@ -1417,7 +1424,7 @@ function claveDe(it){
 }
 (function ofrecerRepetir(){
   if (window.KOBU_PREVIEW) return;
-  let u; try { u = JSON.parse(store.get("kobu-ultimo") || "null"); } catch (e) { u = null; }
+  let u; try { u = JSON.parse(store.get("ultimo") || "null"); } catch (e) { u = null; }
   if (!u || !u.items?.length) return;
   const ok = u.items.map(it => ({ it, key: claveDe(it) })).filter(x => x.key && lookup(x.key) && !lookup(x.key).agotado);
   if (!ok.length) return;
@@ -1569,18 +1576,18 @@ document.addEventListener("keydown", e => { if (e.key === "Escape" && !about.hid
 if (location.hash === "#nosotros") openAbout();
 
 /* Aviso de cookies */
-if (store.get("kobu-cookies") !== "1" && !window.KOBU_PREVIEW) $("#cookie").hidden = false;
-$("#cookieOk").onclick = () => { store.set("kobu-cookies", "1"); $("#cookie").hidden = true; };
+if (store.get("cookies") !== "1" && !window.KOBU_PREVIEW) $("#cookie").hidden = false;
+$("#cookieOk").onclick = () => { store.set("cookies", "1"); $("#cookie").hidden = true; };
 
 /* Datos del pedido para la próxima vez */
 try {
-  const d = JSON.parse(store.get("kobu-datos") || "{}");
+  const d = JSON.parse(store.get("datos") || "{}");
   if (d.nombre) $("#fName").value = d.nombre;
   if (d.direccion) $("#fAddr").value = d.direccion;
   if (d.entrega === "Envío") $('#seg button[data-v="Envío"]').click();
 } catch (e) {}
-$("#form").addEventListener("input", () => store.set("kobu-datos", JSON.stringify({ nombre: $("#fName").value.trim(), direccion: $("#fAddr").value.trim(), entrega })));
-$("#seg").addEventListener("click", () => store.set("kobu-datos", JSON.stringify({ nombre: $("#fName").value.trim(), direccion: $("#fAddr").value.trim(), entrega })));
+$("#form").addEventListener("input", () => store.set("datos", JSON.stringify({ nombre: $("#fName").value.trim(), direccion: $("#fAddr").value.trim(), entrega })));
+$("#seg").addEventListener("click", () => store.set("datos", JSON.stringify({ nombre: $("#fName").value.trim(), direccion: $("#fAddr").value.trim(), entrega })));
 /* Arrancar desde arriba al entrar */
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 const toTop = () => { if (!location.hash && !window.KOBU_PREVIEW) window.scrollTo({ top: 0, left: 0, behavior: "instant" }); };
@@ -1591,12 +1598,12 @@ toTop(); addEventListener("load", toTop); addEventListener("pageshow", toTop);
   const pop = $("#readyPop"); if (!pop) return;
   const w = $("#readyWa"); if (w) w.href = `https://wa.me/${NEG.whatsapp || "5491127929909"}?text=${encodeURIComponent("¡Hola Kobu! ¿Qué productos tienen disponibles para entrega inmediata?")}`;
   if (window.KOBU_PREVIEW) return;
-  let seen = false; try { seen = sessionStorage.getItem("kobu-ready") === "1"; } catch (e) {}
+  let seen = false; try { seen = sessionStorage.getItem(KNS + "ready") === "1"; } catch (e) {}
   if (seen || location.hash) return;
   let last = null;
   const close = () => {
     if (pop.hidden || pop.classList.contains("closing")) return;
-    try { sessionStorage.setItem("kobu-ready", "1"); } catch (e) {}
+    try { sessionStorage.setItem(KNS + "ready", "1"); } catch (e) {}
     const done = () => { pop.hidden = true; pop.classList.remove("closing"); if (last && last.focus) last.focus(); };
     if (matchMedia("(prefers-reduced-motion: reduce)").matches) return done();
     pop.classList.add("closing"); setTimeout(done, 210);
