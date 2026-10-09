@@ -953,9 +953,6 @@
       <h3>Qué datos usamos</h3>
       <p>Este sitio no tiene registro de usuarios ni guarda información en ningún servidor. Los datos que completás al armar el pedido (nombre, forma de entrega, dirección, fecha y notas) solo se usan para escribir el mensaje, y nos llegan únicamente si vos decidís enviarlo por WhatsApp. Para agilizar tus próximos pedidos, tu nombre, dirección, forma de entrega y tu último pedido quedan guardados solo en tu navegador.</p>
 
-      <h3>Estadísticas</h3>
-      <p>Podemos contar las visitas al sitio de forma anónima, sin cookies y sin datos personales, para saber cuánta gente usa el menú.</p>
-
       <h3>Para qué los usamos</h3>
       <p>Usamos esos datos solo para gestionar tu pedido y coordinar la entrega. No los vendemos, no los cedemos a terceros y no los usamos para enviarte publicidad.</p>
 
@@ -1693,12 +1690,6 @@ toTop(); addEventListener("load", toTop); addEventListener("pageshow", toTop);
   const show = () => { if (document.querySelector(".drawer:not([hidden]), .legal:not([hidden])")) return; last = document.activeElement; pintarYa(); pop.hidden = false; pop.querySelector(".ready-x").focus({ preventScroll: true }); };
   setTimeout(show, document.getElementById("splash") ? 2300 : 700);
 })();
-
-/* Estadísticas (solo si hay un código en datos.js) */
-if (K.estadisticas && /^[a-z0-9-]+$/i.test(K.estadisticas) && location.protocol.startsWith("http") && !window.KOBU_PREVIEW){
-  const g = document.createElement("script"); g.async = true; g.src = "https://gc.zgo.at/count.js";
-  g.dataset.goatcounter = `https://${K.estadisticas}.goatcounter.com/count`; document.head.append(g);
-}
 
 /* Bordes de las filas deslizables */
 function edgeFade(el){

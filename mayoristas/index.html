@@ -627,12 +627,6 @@ if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 const toTop = () => { if (!location.hash && !window.KOBU_PREVIEW) window.scrollTo({ top: 0, left: 0, behavior: "instant" }); };
 toTop(); addEventListener("load", toTop); addEventListener("pageshow", toTop);
 
-/* Estadísticas (solo si hay un código en datos.js) */
-if (K.estadisticas && /^[a-z0-9-]+$/i.test(K.estadisticas) && location.protocol.startsWith("http") && !window.KOBU_PREVIEW){
-  const g = document.createElement("script"); g.async = true; g.src = "https://gc.zgo.at/count.js";
-  g.dataset.goatcounter = `https://${K.estadisticas}.goatcounter.com/count`; document.head.append(g);
-}
-
 let ok = null;
 try { ok = localStorage.getItem(KNS + "cookies"); if (ok === null && localStorage.getItem("kobu-cookies") === "1"){ ok = "1"; localStorage.setItem(KNS + "cookies", "1"); } } catch (e) {}
 if (ok !== "1" && !window.KOBU_PREVIEW) $("#cookie").hidden = false;
