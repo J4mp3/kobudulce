@@ -371,6 +371,7 @@
   .hero-zone{display:block; text-align:center; margin:16px auto 0!important; max-width:none!important; font-size:14.5px!important; font-weight:600!important; color:var(--cream)!important; text-wrap:balance}
   .hero-zone svg{display:inline-block; width:16px; height:16px; color:var(--pink); vertical-align:-2px; margin-right:6px}
   .hero-links{display:flex; justify-content:center; align-items:center; gap:4px; margin-top:6px; color:#B89A92}
+  .hero-links{flex-wrap:wrap; row-gap:0} .hero-links .faq-link{white-space:nowrap}
   .faq-link{ background:none; border:0; color:#E9D6CC; font-size:14px; letter-spacing:.04em; text-decoration:underline; text-underline-offset:3px; padding:6px}
   .faq-link:hover{color:var(--cream)}
   .faq-note{margin:12px 0 0; font-size:13.5px; color:var(--muted)}
@@ -387,6 +388,26 @@
   .faq-head h2 em{display:block; font-family:var(--script); font-style:normal; text-transform:none; font-size:.95em; line-height:1.1; color:var(--bordo)}
   .faq-head button{flex:none; background:none; border:1px solid var(--line); border-radius:999px; padding:7px 14px 5px; font-size:14px}
   .faq-list details{border-bottom:1px solid var(--line)}
+  /* Sugerencias de menú */
+  .sug-form{display:grid; gap:12px; padding:16px 0 4px}
+  .sug-lead{margin:0; font-size:16px; line-height:1.45}
+  .sug-anon{display:flex; align-items:center; gap:8px; margin:0; font-size:13.5px; color:var(--muted)}
+  .sug-anon svg{flex:none; width:16px; height:16px; color:var(--bordo); margin-top:-2px}
+  .sug-form textarea{font:inherit; font-size:16px; color:var(--text); background:#fff; border:1px solid var(--line); border-radius:14px; padding:13px 14px 11px; width:100%; min-height:130px; resize:vertical; line-height:1.4}
+  .sug-form textarea:focus{outline:2px solid var(--bordo); outline-offset:1px}
+  .sug-ideas{display:flex; flex-wrap:wrap; gap:8px}
+  .sug-ideas button{background:var(--paper); border:1px solid var(--line); border-radius:999px; padding:7px 13px 5px; font-size:13.5px; color:var(--text)}
+  .sug-ideas button:hover{border-color:var(--bordo); color:var(--bordo)}
+  .sug-count{justify-self:end; margin-top:-6px; font-size:12.5px; color:var(--muted); font-variant-numeric:tabular-nums}
+  .send.sug-send{margin-top:2px; background:var(--bordo)}
+  .send.sug-send:disabled{opacity:.6}
+  .sug-err{margin:0; font-size:13.5px; color:var(--bordo); text-align:center}
+  .sug-ok{text-align:center; padding:34px 6px 18px}
+  .sug-check{display:inline-grid; place-items:center; width:62px; height:62px; border-radius:50%; background:var(--bordo); color:var(--cream)}
+  .sug-check svg{width:30px; height:30px}
+  .sug-ok h3{margin:14px 0 4px; font-family:var(--serif); font-weight:400; font-size:28px; text-transform:uppercase}
+  .sug-ok p{margin:0 0 18px; color:var(--muted)}
+  .sug-otra{background:none; border:1px solid var(--line); border-radius:999px; padding:9px 18px 7px; font-size:14.5px}
   .faq-list summary{list-style:none; cursor:pointer; display:grid; grid-template-columns:1fr 28px; gap:12px; align-items:center; padding:16px 0; font-weight:600; font-size:16.5px; line-height:1.3}
   .faq-list summary::-webkit-details-marker{display:none}
   .faq-list summary::after{content:"+"; width:28px; height:28px; border-radius:50%; background:var(--paper); color:var(--bordo); display:grid; place-items:center; font-size:20px; font-weight:400; transition:transform .2s}
@@ -598,7 +619,7 @@
     <a href="https://share.google/zzJ3uro3QHDy7MnI1" target="_blank" rel="noopener" aria-label="Google Maps"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2Z"/></svg></a>
   </nav>
   <p class="hero-zone"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7Zm0 9.6A2.6 2.6 0 1 1 12 6.4a2.6 2.6 0 0 1 0 5.2Z"/></svg>Entregas en Zona Norte o retiro en Ingeniero Maschwitz.</p>
-  <div class="hero-links"><button type="button" class="faq-link" data-about>Nosotros</button><span aria-hidden="true">·</span><button type="button" class="faq-link" data-faq>Preguntas frecuentes</button></div>
+  <div class="hero-links"><button type="button" class="faq-link" data-about>Nosotros</button><span aria-hidden="true">·</span><button type="button" class="faq-link" data-faq>Preguntas frecuentes</button><span aria-hidden="true">·</span><button type="button" class="faq-link" data-sug>Sugerencias de menú</button></div>
   <svg class="wave" viewBox="0 0 400 46" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 C 90 50, 170 4, 260 20 S 360 38, 400 26 L400 46 L0 46 Z" fill="#F8F1EA"/></svg>
 </header>
 
@@ -841,6 +862,32 @@
   <button type="button" class="cookie-ok" id="cookieOk">Aceptar</button>
 </div>
 
+<div class="faq" id="sug" role="dialog" aria-modal="true" aria-labelledby="sugTitle" hidden>
+  <div class="faq-sheet">
+    <div class="faq-head">
+      <h2 id="sugTitle">Sugerencias<em>de menú</em></h2>
+      <button type="button" id="closeSug">Cerrar</button>
+    </div>
+    <form class="sug-form" id="sugForm">
+      <p class="sug-lead">¿Qué te gustaría que cocinemos? Contanos sabores, productos nuevos, ideas o gustos.</p>
+      <p class="sug-anon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Es anónimo: no te pedimos nombre ni datos.</p>
+      <input id="sWeb" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <label><span class="sr-only">Tu sugerencia</span><textarea id="sugTxt" maxlength="500" placeholder="Ej: un budín de pistacho, algo sin TACC, alfajores de maicena…"></textarea></label>
+      <span class="sug-count" id="sugCount" aria-live="polite">0/500</span>
+      <div class="sug-ideas" role="group" aria-label="Ideas para empezar">
+        <button type="button" data-idea="Un sabor nuevo: ">Sabor nuevo</button><button type="button" data-idea="Un producto que me gustaría: ">Producto nuevo</button><button type="button" data-idea="Opciones sin TACC o veganas: ">Sin TACC / vegano</button><button type="button" data-idea="Para regalar: ">Para regalar</button>
+      </div>
+      <button type="submit" class="send sug-send" id="sugSend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 10 14"/><path d="m21 3-7 18-4-7-7-4Z"/></svg>Enviar sugerencia</button>
+      <p class="sug-err" id="sugErr" hidden>No se pudo enviar. Probá de nuevo en un rato.</p>
+    </form>
+    <div class="sug-ok" id="sugOk" hidden>
+      <span class="sug-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7"/></svg></span>
+      <h3>¡Gracias!</h3>
+      <p>Ya nos llegó tu idea. La leemos con cariño.</p>
+      <button type="button" class="sug-otra" id="sugOtra">Mandar otra</button>
+    </div>
+  </div>
+</div>
 <div class="faq" id="faq" role="dialog" aria-modal="true" aria-labelledby="faqTitle" hidden>
   <div class="faq-sheet">
     <div class="faq-head">
@@ -1337,7 +1384,7 @@ function pedidoParaApp(num){
 const openers = new Map();
 function dialogOpen(el, focusEl){ openers.set(el, document.activeElement); setTimeout(() => (focusEl || el).focus({ preventScroll: true }), 30); }
 function dialogClose(el){ const o = openers.get(el); openers.delete(el); if (o && document.contains(o)) o.focus({ preventScroll: true }); }
-function topDialog(){ return ["#sent", "#legal", "#faq", "#about", "#drawer"].map(s => $(s)).find(d => d && !d.hidden) || null; }
+function topDialog(){ return ["#sent", "#legal", "#faq", "#sug", "#about", "#drawer"].map(s => $(s)).find(d => d && !d.hidden) || null; }
 document.addEventListener("keydown", e => {
   if (e.key !== "Tab") return;
   const d = topDialog(); if (!d) return;
@@ -1604,6 +1651,35 @@ $("#closeFaq").onclick = closeFaq;
 faq.addEventListener("click", e => { if (e.target === faq) closeFaq(); });
 document.addEventListener("keydown", e => { if (e.key === "Escape" && !faq.hidden) { e.stopImmediatePropagation(); closeFaq(); } }, true);
 if (location.hash === "#preguntas") openFaq();
+
+/* Sugerencias de menú: anónimas, van al script de Kobu (que las manda por Telegram). No se guarda nada del cliente. */
+const sug = $("#sug");
+function openSug(){ dialogOpen(sug, $("#sugTxt")); sug.hidden = false; document.documentElement.style.overflow = "hidden"; }
+function closeSug(){ sug.hidden = true; if ($("#legal").hidden && $("#about").hidden && faq.hidden) document.documentElement.style.overflow = ""; dialogClose(sug); }
+document.addEventListener("click", e => { const a = e.target.closest("[data-sug]"); if (!a) return; e.preventDefault(); openSug(); });
+$("#closeSug").onclick = closeSug;
+sug.addEventListener("click", e => { if (e.target === sug) closeSug(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !sug.hidden) { e.stopImmediatePropagation(); closeSug(); } }, true);
+const sugCount = () => { $("#sugCount").textContent = $("#sugTxt").value.length + "/500"; $("#sugErr").hidden = true; };
+$("#sugTxt").addEventListener("input", sugCount);
+sug.querySelectorAll("[data-idea]").forEach(b => b.addEventListener("click", () => {
+  const t = $("#sugTxt"); if (!t.value.startsWith(b.dataset.idea)) t.value = (b.dataset.idea + t.value).slice(0, 500);
+  t.focus(); t.setSelectionRange(t.value.length, t.value.length); sugCount();
+}));
+$("#sugForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const txt = $("#sugTxt").value.trim(), btn = $("#sugSend");
+  if (txt.length < 3) { $("#sugTxt").focus(); return; }
+  const url = String(NEG.pedidosApp || "");
+  const listo = () => { $("#sugForm").hidden = true; $("#sugOk").hidden = false; $("#sugTxt").value = ""; sugCount(); $("#sugOtra").focus(); };
+  if (window.KOBU_PREVIEW || !/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url) || !window.fetch) { listo(); return; }
+  btn.disabled = true;
+  fetch(url + "?action=sugerencia", { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify({ texto: txt, t: Date.now() - T0, web: $("#sWeb").value, prueba: PRUEBA || undefined }) })
+    .then(listo, () => { $("#sugErr").hidden = false; })
+    .then(() => { btn.disabled = false; });
+});
+$("#sugOtra").onclick = () => { $("#sugOk").hidden = true; $("#sugForm").hidden = false; $("#sugTxt").focus(); };
 
 /* Nosotros */
 const about = $("#about");
