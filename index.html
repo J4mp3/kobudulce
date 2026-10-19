@@ -871,7 +871,7 @@
     <form class="sug-form" id="sugForm">
       <p class="sug-lead">¿Qué te gustaría que cocinemos? Contanos sabores, productos nuevos, ideas o gustos.</p>
       <p class="sug-anon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Es anónimo: no te pedimos nombre ni datos.</p>
-      <input id="sWeb" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+      <input id="kbx2" name="kbx2" type="text" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <label><span class="sr-only">Tu sugerencia</span><textarea id="sugTxt" maxlength="500" placeholder="Ej: un budín de pistacho, algo sin TACC, alfajores de maicena…"></textarea></label>
       <span class="sug-count" id="sugCount" aria-live="polite">0/500</span>
       <div class="sug-ideas" role="group" aria-label="Ideas para empezar">
@@ -1064,7 +1064,7 @@
     <div class="total"><span>Total</span><span id="dTotal">$ 0</span></div>
     <div class="warn" id="warn" hidden>Tu pedido tiene productos <strong>a pedido</strong>. Coordinamos la fecha de entrega por WhatsApp.</div>
     <p class="faq-note">¿Dudas con horarios, envíos o pagos? <button type="button" data-faq>Preguntas frecuentes</button></p>
-    <form class="form" id="form"><input id="fWeb" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+    <form class="form" id="form"><input id="kbx1" name="kbx1" type="text" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <label for="fName">Tu nombre<input id="fName" autocomplete="name" placeholder="Ej: Sofía"></label>
       <label>Entrega
         <div class="seg" id="seg"><button type="button" data-v="Retiro" aria-pressed="true">Retiro</button><button type="button" data-v="Envío" aria-pressed="false">Envío</button></div>
@@ -1361,11 +1361,13 @@ function enviarPedidoApp(datos){
   try {
     const url = String((K.negocio || {}).pedidosApp || "");
     if (window.KOBU_PREVIEW || !datos.items.length || !/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url)) return;
-    const trampa = document.getElementById("fWeb");
+    const trampa = document.getElementById("kbx1");
     const body = JSON.stringify(Object.assign({}, datos, { t: Date.now() - T0, web: trampa ? trampa.value : "", prueba: PRUEBA || undefined }));
     const u = url + "?action=pedidoWeb";
-    if (window.fetch) fetch(u, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body }).catch(() => {});
-    else if (navigator.sendBeacon) navigator.sendBeacon(u, body);
+    // sendBeacon primero: el navegador lo manda aunque la página se cierre al abrir WhatsApp (navegadores de Instagram/Facebook incluidos).
+    let enviado = false;
+    try { enviado = !!(navigator.sendBeacon && navigator.sendBeacon(u, new Blob([body], { type: "text/plain;charset=utf-8" }))); } catch (e) {}
+    if (!enviado && window.fetch) fetch(u, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body }).catch(() => {});
   } catch (e) {}
 }
 /* Lo que va a la app: los mismos productos, cantidades y datos del mensaje de WhatsApp */
@@ -1675,7 +1677,7 @@ $("#sugForm").addEventListener("submit", e => {
   if (window.KOBU_PREVIEW || !/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url) || !window.fetch) { listo(); return; }
   btn.disabled = true;
   fetch(url + "?action=sugerencia", { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" },
-    body: JSON.stringify({ texto: txt, t: Date.now() - T0, web: $("#sWeb").value, prueba: PRUEBA || undefined }) })
+    body: JSON.stringify({ texto: txt, t: Date.now() - T0, web: $("#kbx2").value, prueba: PRUEBA || undefined }) })
     .then(listo, () => { $("#sugErr").hidden = false; })
     .then(() => { btn.disabled = false; });
 });

@@ -370,7 +370,7 @@
 
   <section class="form-card" id="pedido" aria-labelledby="tp">
     <h2 id="tp">Contactanos<em>por WhatsApp</em></h2>
-    <form class="form" id="form"><input id="fWeb" name="website" type="text" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
+    <form class="form" id="form"><input id="kbx1" name="kbx1" type="text" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
       <ul class="sum" id="sum" hidden></ul>
       <label class="field"><span>Nombre del negocio</span><input id="bName" autocomplete="organization"></label>
       <label class="field"><span>Mensaje</span><textarea id="bNote"></textarea></label>
@@ -626,11 +626,13 @@ function enviarPedidoApp(datos){
   try {
     const url = String((K.negocio || {}).pedidosApp || "");
     if (window.KOBU_PREVIEW || !datos.items.length || !/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url)) return;
-    const trampa = document.getElementById("fWeb");
+    const trampa = document.getElementById("kbx1");
     const body = JSON.stringify(Object.assign({}, datos, { t: Date.now() - T0, web: trampa ? trampa.value : "", prueba: PRUEBA || undefined }));
     const u = url + "?action=pedidoWeb";
-    if (window.fetch) fetch(u, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body }).catch(() => {});
-    else if (navigator.sendBeacon) navigator.sendBeacon(u, body);
+    // sendBeacon primero: el navegador lo manda aunque la página se cierre al abrir WhatsApp (navegadores de Instagram/Facebook incluidos).
+    let enviado = false;
+    try { enviado = !!(navigator.sendBeacon && navigator.sendBeacon(u, new Blob([body], { type: "text/plain;charset=utf-8" }))); } catch (e) {}
+    if (!enviado && window.fetch) fetch(u, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=utf-8" }, body }).catch(() => {});
   } catch (e) {}
 }
 $("#send").addEventListener("click", () => {
