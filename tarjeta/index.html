@@ -255,7 +255,7 @@
     <p class="sub">Te pedimos lo justo para reconocerte y saludarte en tu cumple.</p>
     <form class="form" id="form" novalidate>
       <input id="kbx3" name="kbx3" type="text" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" aria-hidden="true" class="trampa">
-      <label for="fNom">Apellido y nombre<input id="fNom" autocomplete="name" maxlength="60" placeholder="Ej: Pérez, Sofía"></label>
+      <label for="fNom">Nombre y Apellido<input id="fNom" autocomplete="name" maxlength="60" placeholder="Ej: Sofía Pérez"></label>
       <div class="lbl">Cumpleaños
         <div class="two">
           <select id="fDia" aria-label="Día"><option value="">Día</option></select>
@@ -1926,6 +1926,8 @@ return qrcode;})();
   function guardarMia(t){ try { localStorage.setItem(KMI, t); } catch (e) {} }
   function olvidarMia(){ try { localStorage.removeItem(KMI); } catch (e) {} }
   function leerMia(){ try { var t = localStorage.getItem(KMI) || ""; return /^[a-z0-9]{20}$/.test(t) ? t : ""; } catch (e) { return ""; } }
+  var AUTO = false;
+  if (!MI && leerMia()) { MI = leerMia(); AUTO = true; try { history.replaceState(null, "", location.pathname + location.search + "#t=" + MI); } catch (e) {} }
   window.addEventListener("hashchange", function(){ location.reload(); });
   if (MI) document.documentElement.classList.add("modo-mi");
   function pintar(){
@@ -1962,15 +1964,17 @@ return qrcode;})();
     hero.querySelector("h1 + p").textContent = "Cada pedido que te entregamos suma un sello.";
     var ios0 = /iPhone|iPad|iPod/.test(navigator.userAgent);
     $("miInicioTxt").textContent = ios0 ? "En Safari tocá Compartir y después \u201cAgregar a inicio\u201d: vas a tener tu tarjeta como una app. Es tu link personal: no lo compartas." : "En Chrome tocá el menú (los tres puntos) y después \u201cAgregar a la pantalla principal\u201d: vas a tener tu tarjeta como una app. Es tu link personal: no lo compartas.";
-    $("miOlvidar").addEventListener("click", function(){ olvidarMia(); location.replace(location.pathname + location.search); });
+    var MIA = !leerMia() || leerMia() === MI; // otra tarjeta guardada: esta se muestra pero no la reemplaza
+    if (!MIA) $("miOlvidar").parentNode.style.display = "none";
+    $("miOlvidar").addEventListener("click", function(){ if (leerMia() === MI) olvidarMia(); location.replace(location.pathname + location.search); });
     var falla = function(t){ $("miCuenta").textContent = t; $("miFalta").textContent = "Si el problema sigue, escribinos por WhatsApp."; };
     if (!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(URL_APP) || !window.fetch) falla("No pudimos cargar tu tarjeta.");
     else fetch(URL_APP + "?action=fidVer&t=" + MI + (PRUEBA ? "&prueba=1" : "")).then(function(r){ return r.json(); }).then(function(j){
-      if (!j || !j.ok) { if (!(j && j.error === "muchos") && leerMia() === MI) olvidarMia(); return falla(j && j.error === "muchos" ? "Hay muchas consultas en este momento. Probá en un rato." : "No encontramos esta tarjeta."); }
+      if (!j || !j.ok) { if (j && j.ok === false && !j.error && leerMia() === MI) { olvidarMia(); if (AUTO && !leerMia()) return location.replace(location.pathname + location.search); } return falla(j && j.error === "muchos" ? "Hay muchas consultas en este momento. Probá en un rato." : "No encontramos esta tarjeta."); }
       var c = { desc:Number(j.desc), pct:Number(j.pct), regalo:Number(j.regalo), regaloTxt:String(j.regaloTxt || cfg.regaloTxt).slice(0, 40) }, s = Number(j.sellos);
       if (![c.desc, c.pct, c.regalo, s].every(function(v){ return Number.isInteger(v); }) || c.regalo < 2 || c.regalo > 30 || c.desc < 1 || c.desc >= c.regalo || s < 0) return falla("No pudimos cargar tu tarjeta.");
       cfg = c; SELLOS = Math.min(s, c.regalo); pintar();
-      guardarMia(MI);
+      if (MIA) guardarMia(MI);
       var nom = String(j.nombre || "").slice(0, 30);
       hero.querySelector("h1").textContent = nom ? "¡Hola, " + nom + "!" : "¡Hola!";
       if (j.pendiente) { $("miCuenta").textContent = "Tu tarjeta ya está creada"; $("miFalta").textContent = "Empezás a sumar sellos con tu primer pedido entregado."; }
@@ -2061,8 +2065,8 @@ return qrcode;})();
     ev.preventDefault();
     var nom = $("fNom").value.trim().replace(/\s+/g, " "), tel = $("fTel").value.trim(), mail = $("fMail").value.trim();
     var dia = dias.value, mes = meses.value;
-    if (nom.length < 3) return err("Escribí tu apellido y nombre.");
-    try { if (!new RegExp("^[\\p{L}\\p{M} .,'’\\-]+$", "u").test(nom)) return err("Escribí tu apellido y nombre solo con letras."); } catch (e) {}
+    if (nom.length < 3) return err("Escribí tu nombre y apellido.");
+    try { if (!new RegExp("^[\\p{L}\\p{M} .,'’\\-]+$", "u").test(nom)) return err("Escribí tu nombre y apellido solo con letras."); } catch (e) {}
     if (!dia || !mes) return err("Elegí el día y el mes de tu cumpleaños.");
     if (tel.replace(/\D/g, "").length < 8) return err("Revisá el teléfono.");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(mail)) return err("Revisá el mail.");
@@ -2076,7 +2080,8 @@ return qrcode;})();
       .then(function(j){
         if (!j || !j.ok) throw new Error((j && j.error) || "error");
         $("formCard").hidden = true; $("done").hidden = false;
-        $("doneTitle").textContent = "¡Listo, " + nom.split(/[ ,]+/).filter(Boolean).pop() + "!";
+        var pila = (nom.indexOf(",") >= 0 ? nom.slice(nom.indexOf(",") + 1) : nom).trim().split(/\s+/)[0] || nom.split(/[ ,]+/).filter(Boolean)[0] || "";
+        $("doneTitle").textContent = pila ? "¡Listo, " + pila + "!" : "¡Listo!";
         var ios = /iPhone|iPad|iPod/.test(navigator.userAgent);
         var w = String(j.wallet || "");
         if (!ios && /^https:\/\/pay\.google\.com\/gp\/v\/save\/[\w.-]+$/.test(w)) { $("gw").href = w; $("gw").hidden = false; }
