@@ -1989,6 +1989,19 @@ return qrcode;})();
     for (var r = 0; r < n; r++) for (var c = 0; c < n; c++) if (q.isDark(r, c)) d += "M" + (c + m) + " " + (r + m) + "h1v1h-1z";
     return '<svg viewBox="0 0 ' + (n + 2 * m) + " " + (n + 2 * m) + '" shape-rendering="crispEdges" aria-hidden="true"><rect width="100%" height="100%" fill="#fff"/><path d="' + d + '" fill="#240D0E"/></svg>';
   }
+  function pasosInicio(ua){
+    if (/iPhone|iPad|iPod/.test(ua)) {
+      if (/CriOS/.test(ua)) return "En Chrome tocá Compartir (el cuadrado con la flecha, arriba) y después \u201cAgregar a inicio\u201d";
+      if (/FxiOS/.test(ua)) return "En Firefox tocá el menú (las tres rayas), después Compartir y \u201cAgregar a inicio\u201d";
+      if (/EdgiOS/.test(ua)) return "En Edge tocá el menú (los tres puntos), después Compartir y \u201cAgregar a inicio\u201d";
+      return "En Safari tocá Compartir (el cuadrado con la flecha) y después \u201cAgregar a inicio\u201d";
+    }
+    if (/SamsungBrowser/.test(ua)) return "En Samsung Internet tocá el menú (las tres rayas, abajo), después \u201cAgregar página a\u201d y \u201cPantalla de inicio\u201d";
+    if (/Firefox/.test(ua)) return "En Firefox tocá el menú (los tres puntos) y después \u201cAgregar a la pantalla de inicio\u201d";
+    if (/EdgA/.test(ua)) return "En Edge tocá el menú (los tres puntos, abajo) y después \u201cAgregar al teléfono\u201d";
+    if (/Chrome\//.test(ua) && !/OPR|Opera|YaBrowser|UCBrowser|MiuiBrowser|HuaweiBrowser|DuckDuckGo|Brave|wv\)/.test(ua)) return "En Chrome tocá el menú (los tres puntos) y después \u201cAgregar a la pantalla principal\u201d";
+    return "En el menú de tu navegador buscá la opción \u201cAgregar a la pantalla de inicio\u201d";
+  }
   function minus(t){ return t.charAt(0).toLowerCase() + t.slice(1); }
   if (MI) {
     var hero = document.querySelector(".hero");
@@ -1996,7 +2009,7 @@ return qrcode;})();
     hero.querySelector("h1").textContent = "¡Hola!";
     hero.querySelector("h1 + p").textContent = "Cada pedido que te entregamos suma un sello.";
     var ios0 = /iPhone|iPad|iPod/.test(navigator.userAgent);
-    $("miInicioTxt").textContent = ios0 ? "En Safari tocá Compartir y después \u201cAgregar a inicio\u201d: vas a tener tu tarjeta como una app. Es tu link personal: no lo compartas." : "En Chrome tocá el menú (los tres puntos) y después \u201cAgregar a la pantalla principal\u201d: vas a tener tu tarjeta como una app. Es tu link personal: no lo compartas.";
+    $("miInicioTxt").textContent = pasosInicio(navigator.userAgent || "") + ": vas a tener tu tarjeta como una app. Es tu link personal: no lo compartas.";
     var MIA = !leerMia() || leerMia() === MI; // otra tarjeta guardada: esta se muestra pero no la reemplaza
     if (!MIA) $("miOlvidar").parentNode.style.display = "none";
     $("miOlvidar").addEventListener("click", function(){ if (leerMia() === MI) olvidarMia(); location.replace(location.pathname + location.search); });
