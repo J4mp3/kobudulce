@@ -70,6 +70,8 @@
   .qr{width:min(240px, 70vw); margin:6px auto 0; background:#fff; border-radius:14px; padding:10px; border:1px solid var(--line)}
   .qr svg{display:block; width:100%; height:auto}
   .qr-id{margin:8px 0 0; text-align:center; font-size:12px; letter-spacing:.12em; color:var(--muted)}
+  .gw.gw-off{background:#CFC6C1; color:#fff; cursor:default}
+  .gw-nota{margin:8px 0 0; text-align:center; font-size:12.5px; color:var(--muted)}
   .ver-mia{display:flex; align-items:center; justify-content:center; gap:10px; width:100%; background:var(--bordo); color:var(--cream); border-radius:999px; padding:14px 18px 12px; font-weight:700; font-size:16px; text-decoration:none; margin-top:12px}
   .flip-tip{display:flex; align-items:center; justify-content:center; gap:7px; margin:-8px 0 0; font-size:13px; font-weight:600; letter-spacing:.04em; color:var(--muted)}
   .flip-tip svg{width:16px; height:16px; margin-top:-2px; transform:rotate(90deg)}
@@ -227,6 +229,12 @@
     <h2>Tu código</h2>
     <p class="sub">Mostralo cuando retires tu pedido y te sumamos el sello.</p>
     <div class="qr" id="qrBox" role="img" aria-label="Código QR de tu tarjeta"></div>
+  </section>
+  <section class="card solo-mi" id="miWallet" hidden>
+    <h2>Google Wallet</h2>
+    <p class="sub">Guardá la tarjeta en la billetera de tu celular.</p>
+    <button type="button" class="gw gw-off" id="miWalletBtn" disabled aria-disabled="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 8V5a1 1 0 0 0-1-1H6a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2V6"/><path d="M20 12v4h-4a2 2 0 0 1 0-4h4"/></svg><span>Agregar a Google Wallet</span></button>
+    <p class="gw-nota" id="miWalletNota">Inactiva por el momento</p>
   </section>
   <section class="card solo-mi" id="miInicio" hidden>
     <h2>Tenela siempre a mano</h2>
@@ -1910,6 +1918,8 @@ return qrcode;})();
   var $ = function(id){ return document.getElementById(id); };
   function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c]; }); }
   var primera = true, SELLOS = null;
+  // "Agregar a Google Wallet" en Mi tarjeta: se prende cuando Google apruebe la publicación de la tarjeta.
+  var WALLET_ACTIVO = false;
   // "Mi tarjeta": /tarjeta/#t=<token>. El token también queda guardado en este celular.
   var KMI = "kobu-mi-tarjeta" + (PRUEBA ? "-prueba" : "");
   var MI = (function(){ var m = /^#(?:.*&)?t=([a-z0-9]{20})(?:&|$)/.exec(location.hash || ""); return m ? m[1] : ""; })();
@@ -1971,6 +1981,21 @@ return qrcode;})();
       var pr = j.premio === "regalo" ? "Tenés " + minus(c.regaloTxt) + " esperándote." : j.premio === "desc" ? "Tenés un " + c.pct + "% de descuento para tu próximo pedido." : "";
       $("miPremioTxt").textContent = pr; $("miPremio").hidden = !pr;
       $("qrBox").innerHTML = qrSvg("KOBU1-" + MI); $("miQr").hidden = false; $("miInicio").hidden = false;
+      if (!ios0) {
+        $("miWallet").hidden = false;
+        if (WALLET_ACTIVO) {
+          var wb = $("miWalletBtn"); wb.disabled = false;
+          window.addEventListener("pageshow", function(ev){ if (ev.persisted) wb.disabled = false; }); wb.removeAttribute("aria-disabled"); wb.classList.remove("gw-off"); $("miWalletNota").hidden = true;
+          wb.addEventListener("click", function(){
+            wb.disabled = true; $("miWalletNota").hidden = true;
+            fetch(URL_APP + "?action=fidWallet&t=" + MI + (PRUEBA ? "&prueba=1" : "")).then(function(r){ return r.json(); }).then(function(w){
+              var u = String((w && w.wallet) || "");
+              if (w && w.ok && /^https:\/\/pay\.google\.com\/gp\/v\/save\/[\w.-]+$/.test(u)) { location.href = u; return; }
+              throw new Error((w && w.error) || "error");
+            }).catch(function(e){ wb.disabled = false; $("miWalletNota").textContent = /muchos/.test(e.message) ? "Hay muchas consultas en este momento. Probá en un rato." : "No se pudo abrir Google Wallet. Probá de nuevo en un rato."; $("miWalletNota").hidden = false; });
+          });
+        }
+      }
     }).catch(function(){ falla("No pudimos cargar tu tarjeta."); });
   }
   // Girar la tarjeta (toque, Enter o espacio). Al entrar hace un amague para invitar a tocarla.
