@@ -4,7 +4,7 @@
    el editor, pero también se puede editar a mano con cuidado:
    · textos entre comillas, precios solo con números, una coma después de cada cosa.
    · no cambies los "id" de lo que ya existe.
-   Última edición: 6/10/2026, 11:13:04
+   Última edición: 24/10/2026, 11:05:00
    ===================================================================== */
 
 window.KOBU = {
@@ -85,22 +85,6 @@ window.KOBU = {
           alergenos: []
         },
         {
-          id: "naranja-miel",
-          nombre: "Naranja y miel",
-          precio: 4000,
-          opciones: {
-            titulo: "Glasé",
-            lista: [
-              "Con glasé cítrico"
-            ],
-            sin: "Sin glasé",
-            ayuda: "Con glasé cítrico o sin glasé",
-            visual: "glase"
-          },
-          colorMasa: "#D99A4C",
-          alergenos: []
-        },
-        {
           id: "budin-xl",
           nombre: "Budín XL",
           precio: 7500,
@@ -109,7 +93,7 @@ window.KOBU = {
           opciones: {
             titulo: "Sabor",
             prefijo: "Sabor: ",
-            ayuda: "Limón, naranja y naranja y miel: con o sin glasé cítrico",
+            ayuda: "Limón y naranja: con o sin glasé cítrico",
             lista: [
               "Vainilla",
               "Limón con glasé cítrico",
@@ -118,9 +102,7 @@ window.KOBU = {
               "Naranja sin glasé",
               "Banana",
               "Marmolado",
-              "Chips de chocolate",
-              "Naranja y miel con glasé cítrico",
-              "Naranja y miel sin glasé"
+              "Chips de chocolate"
             ]
           },
           alergenos: [],
@@ -209,6 +191,22 @@ window.KOBU = {
           alergenos: [
             "alcohol"
           ]
+        },
+        {
+          id: "naranja-miel",
+          nombre: "Naranja y miel",
+          precio: 8300,
+          opciones: {
+            titulo: "Glasé",
+            lista: [
+              "Con glasé cítrico"
+            ],
+            sin: "Sin glasé",
+            ayuda: "Con glasé cítrico o sin glasé",
+            visual: "glase"
+          },
+          colorMasa: "#D99A4C",
+          alergenos: []
         }
       ]
     },
@@ -260,7 +258,7 @@ window.KOBU = {
         },
         {
           id: "kobulitos",
-          nombre: "Kobulitos de Malbec",
+          nombre: "Cuadraditos de Malbec",
           etiquetaNegocios: "Por porción",
           descripcion: "Cuadraditos húmedos de chocolate con Malbec.",
           variantes: [
