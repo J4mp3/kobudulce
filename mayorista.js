@@ -1,13 +1,13 @@
 /* =====================================================================
    KOBU DULCE · LISTA MAYORISTA  (página /mayoristas)
-   Lo guarda KobuEditor (pestaña Mayorista). Es una lista aparte del menú:
+   Lo guarda el editor de la web (pestaña Mayorista). Es una lista aparte del menú:
    secciones, productos, ingredientes, precio mayorista y precio al público
    (este último se muestra tachado). Sin precio mayorista = "Precio a consultar".
-   Última edición: 6/10/2026, 11:13:04
+   Última edición: 29/10/2026, 20:45:39
    ===================================================================== */
 
 window.KOBU_MAYORISTA = {
-  actualizado: "2026-10-06",
+  actualizado: "2026-10-29",
   categorias: [
     {
       id: "clasicos",
@@ -106,6 +106,13 @@ window.KOBU_MAYORISTA = {
           precio: 6900,
           precioPublico: 8300,
           ingredientes: "Harina, Azúcar, Leche, Aceite, Licor de dulce de leche, Huevos, Esencia de Vainilla."
+        },
+        {
+          id: "nuevo-producto",
+          nombre: "Naranja y miel",
+          ingredientes: "Harina, Azúcar, Leche, Aceite, Miel, Huevos, Ralladura de Naranja.",
+          precio: 6900,
+          precioPublico: 8300
         }
       ]
     },
@@ -127,13 +134,6 @@ window.KOBU_MAYORISTA = {
               nombre: "Cada porción",
               precio: 2300,
               precioPublico: 2800
-            },
-            {
-              id: "grande",
-              nombre: "Entero grande",
-              detalle: "Bandeja 22 × 28 cm, rinde 8 porciones",
-              precio: 18000,
-              precioPublico: 20000
             }
           ]
         },
@@ -152,7 +152,7 @@ window.KOBU_MAYORISTA = {
         },
         {
           id: "kobulitos",
-          nombre: "Kobulitos de Malbec",
+          nombre: "Cuadraditos de Malbec",
           descripcion: "Cuadraditos húmedos de chocolate con Malbec.",
           variantes: [
             {
