@@ -210,6 +210,9 @@
   .confeti i{position:absolute; top:-20px; width:9px; height:14px; border-radius:2px; animation:fall 1.8s ease-in forwards}
   @keyframes fall{to{transform:translateY(105vh) rotate(540deg); opacity:.9}}
   html.sin-splash{--d0:0s}
+  /* Red de seguridad: si el navegador no corrió las animaciones de entrada, se muestra todo igual */
+  html.sin-anim .rise, html.sin-anim .st, html.sin-anim .st.on svg{animation:none!important; opacity:1!important; transform:none!important}
+  html.sin-anim .splash{display:none!important}
   @media (prefers-reduced-motion: reduce){ .splash{display:none} .rise, .st, .st.on svg, .done .big, .done h2, .done .sub, .done .gw{animation:none!important; opacity:1; transform:none} .hero .logo.rise, .st.gift svg, .flip.peek .flip-in{animation:none} .st.on svg{opacity:1} .flip-in{transition:none} .confeti{display:none} }
 </style>
 </head>
@@ -248,6 +251,22 @@
   sp.addEventListener("animationend", function(e){ if (e.animationName === "sp-out") done(); });
   sp.addEventListener("click", function(){ sp.classList.add("leave"); });
   setTimeout(done, 2700);
+})();
+// Red de seguridad (7/11/2026): algunos navegadores (el de Instagram o WhatsApp, una pestaña abierta en segundo plano,
+// ahorro de batería) no corren las animaciones de entrada y la página quedaba oscura o vacía hasta volver atrás.
+// Si a los 4,5 s la página todavía no se ve, se muestra sin animación.
+(function(){
+  var html = document.documentElement;
+  function chequear(){
+    if (html.classList.contains("sin-anim")) return;
+    var h = document.querySelector(".hero h1"), sp = document.getElementById("splash");
+    var oculto = !h || parseFloat(getComputedStyle(h).opacity) < 0.9;
+    var tapa = sp && !sp.classList.contains("tr-hole") && getComputedStyle(sp).visibility !== "hidden" && parseFloat(getComputedStyle(sp).opacity) > 0.1;
+    if (oculto || tapa) { html.classList.add("sin-anim"); if (sp && !sp.classList.contains("tr-hole")) sp.remove(); }
+  }
+  setTimeout(chequear, 4500);
+  window.addEventListener("pageshow", function(e){ if (e.persisted) chequear(); });
+  document.addEventListener("visibilitychange", function(){ if (!document.hidden) setTimeout(chequear, 3500); });
 })();
 </script>
 <header class="hero">
@@ -2063,7 +2082,15 @@ return qrcode;})();
     $("miOlvidar").addEventListener("click", function(){ if (leerMia() === MI) olvidarMia(); location.replace(location.pathname + location.search); });
     var falla = function(t){ $("miCuenta").textContent = t; $("miFalta").textContent = "Si el problema sigue, escribinos por WhatsApp."; revelar(); };
     if (!/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(URL_APP) || !window.fetch) falla("No pudimos cargar tu tarjeta.");
-    else fetch(URL_APP + "?action=fidVer&t=" + MI + (PRUEBA ? "&prueba=1" : "")).then(function(r){ return r.json(); }).then(function(j){
+    else setTimeout(function(){
+      // Si el servidor tarda mucho (a veces Google demora en despertar), se avisa y se puede reintentar.
+      if ($("miCuenta").textContent !== "Cargando tu tarjeta…") return;
+      $("miCuenta").textContent = "Está tardando más de lo normal…";
+      $("miFalta").innerHTML = '<button type="button" class="lnk" id="miReint">Reintentar</button>';
+      $("miReint").addEventListener("click", function(){ location.reload(); });
+      revelar();
+    }, 15000);
+    if (/^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(URL_APP) && window.fetch) fetch(URL_APP + "?action=fidVer&t=" + MI + (PRUEBA ? "&prueba=1" : "")).then(function(r){ return r.json(); }).then(function(j){
       if (!j || !j.ok) { if (j && j.ok === false && !j.error && leerMia() === MI) { olvidarMia(); if (AUTO && !leerMia()) return location.replace(location.pathname + location.search); } return falla(j && j.error === "muchos" ? "Hay muchas consultas en este momento. Probá en un rato." : "No encontramos esta tarjeta."); }
       var c = { desc:Number(j.desc), pct:Number(j.pct), regalo:Number(j.regalo), regaloTxt:String(j.regaloTxt || cfg.regaloTxt).slice(0, 40) }, s = Number(j.sellos);
       if (![c.desc, c.pct, c.regalo, s].every(function(v){ return Number.isInteger(v); }) || c.regalo < 2 || c.regalo > 30 || c.desc < 1 || c.desc >= c.regalo || s < 0) return falla("No pudimos cargar tu tarjeta.");
