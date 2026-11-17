@@ -323,7 +323,7 @@
     <ol class="how" style="margin-top:0">
       <li><b>1</b><span>Completás tus datos acá abajo y guardás la tarjeta.</span></li>
       <li><b>2</b><span>Cada pedido que te entregamos suma <strong>un sello</strong>.</span></li>
-      <li><b>3</b><span id="howPrize">A los 5 sellos tenés un <strong>10% de descuento</strong> y a los 10, <strong>un budín clásico de regalo</strong>.</span></li>
+      <li><b>3</b><span id="howPrize">La compra de tu sello 5 tiene un <strong>10% de descuento</strong> y a los 10 sellos, <strong>un budín clásico de regalo</strong>.</span></li>
     </ol>
   </section>
 
@@ -2022,7 +2022,7 @@ return qrcode;})();
     st.innerHTML = h; st.classList.toggle("una", una);
     st.style.gridTemplateColumns = "repeat(" + cols + ", 10.34cqw)";
     primera = false;
-    $("howPrize").innerHTML = "A los " + cfg.desc + " sellos tenés un <strong>" + cfg.pct + "% de descuento</strong> y a los " + cfg.regalo + ", <strong>" + esc(cfg.regaloTxt.charAt(0).toLowerCase() + cfg.regaloTxt.slice(1)) + "</strong>.";
+    $("howPrize").innerHTML = "La compra de tu sello " + cfg.desc + " tiene un <strong>" + cfg.pct + "% de descuento</strong> y a los " + cfg.regalo + " sellos, <strong>" + esc(cfg.regaloTxt.charAt(0).toLowerCase() + cfg.regaloTxt.slice(1)) + "</strong>.";
   }
   var dias = $("fDia"), meses = $("fMes");
   for (var d = 1; d <= 31; d++) dias.insertAdjacentHTML("beforeend", '<option value="' + (d < 10 ? "0" : "") + d + '">' + d + "</option>");
@@ -2102,7 +2102,7 @@ return qrcode;})();
       if (j.pendiente) { $("miCuenta").textContent = "Tu tarjeta ya está creada"; $("miFalta").textContent = "Empezás a sumar sellos con tu primer pedido entregado."; }
       else {
         $("miCuenta").textContent = "Llevás " + SELLOS + " de " + c.regalo + " sellos";
-        $("miFalta").textContent = SELLOS < c.desc ? "Te " + (c.desc - SELLOS === 1 ? "falta 1" : "faltan " + (c.desc - SELLOS)) + " para tu " + c.pct + "% de descuento." : SELLOS < c.regalo ? "Te " + (c.regalo - SELLOS === 1 ? "falta 1" : "faltan " + (c.regalo - SELLOS)) + " para " + minus(c.regaloTxt) + "." : "";
+        $("miFalta").textContent = SELLOS < c.desc - 1 ? "Te faltan " + (c.desc - SELLOS) + " para el sello " + c.desc + ", que viene con " + c.pct + "% de descuento." : SELLOS < c.regalo ? "Te " + (c.regalo - SELLOS === 1 ? "falta 1" : "faltan " + (c.regalo - SELLOS)) + " para " + minus(c.regaloTxt) + "." : "";
       }
       var pr = j.premio === "regalo" ? "Tenés " + minus(c.regaloTxt) + " esperándote." : j.premio === "desc" ? "Tenés un " + c.pct + "% de descuento para tu próximo pedido." : "";
       $("miPremioTxt").textContent = pr; $("miPremio").hidden = !pr;
